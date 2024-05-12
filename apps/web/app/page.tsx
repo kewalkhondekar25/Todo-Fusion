@@ -4,6 +4,7 @@ import { Code } from "@repo/ui/code";
 import styles from "./page.module.css";
 import { Button } from "@repo/ui/button";
 import { getTodo, createUser, createTodos } from "@repo/db";
+import { MESSAGE } from "@repo/validation-schema";
 
 
 function Gradient({
@@ -59,6 +60,7 @@ export default async function Page(): Promise<JSX.Element> {
   // const todos = await createTodos();
   // console.log(result);
   // console.log(todos);
+  console.log(MESSAGE);
   
   
   return (
