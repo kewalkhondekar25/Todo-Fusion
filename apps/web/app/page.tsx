@@ -3,6 +3,8 @@ import { Card } from "@repo/ui/card";
 import { Code } from "@repo/ui/code";
 import styles from "./page.module.css";
 import { Button } from "@repo/ui/button";
+import { getTodo, createUser, createTodos } from "@repo/db";
+
 
 function Gradient({
   conic,
@@ -51,7 +53,14 @@ const LINKS = [
   },
 ];
 
-export default function Page(): JSX.Element {
+export default async function Page(): Promise<JSX.Element> {
+  const user = await createUser()
+  const result = await getTodo()
+  const todos = await createTodos();
+  console.log(result);
+  console.log(todos);
+  
+  
   return (
     <main className={styles.main}>
       <div className={styles.description}>
