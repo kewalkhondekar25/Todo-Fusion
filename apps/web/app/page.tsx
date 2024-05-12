@@ -54,11 +54,11 @@ const LINKS = [
 ];
 
 export default async function Page(): Promise<JSX.Element> {
-  const user = await createUser()
-  const result = await getTodo()
-  const todos = await createTodos();
-  console.log(result);
-  console.log(todos);
+  // const user = await createUser()
+  // const result = await getTodo()
+  // const todos = await createTodos();
+  // console.log(result);
+  // console.log(todos);
   
   
   return (
