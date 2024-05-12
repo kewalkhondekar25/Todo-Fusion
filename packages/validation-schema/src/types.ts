@@ -12,17 +12,17 @@
 
 import {z} from "zod"
 
-const userInputSchema = z.object({
+const MESSAGE = "hello from zod validations"
+
+const signupSchema = z.object({
   firstName: z.string().min(3, {message: "First name must be at least 3 characters long"}),
   lastName: z.string().min(3, {message: "First name must be at least 3 characters long"}),
   email: z.string().email({message: "Invalid email format"}),
-  password: z.string(),
-  avatar: z.string().optional()
+  password: z.string()
 })
 
-const MESSAGE = "hello from zod validations"
 
 export {
-  userInputSchema,
+  signupSchema,
   MESSAGE
 }
