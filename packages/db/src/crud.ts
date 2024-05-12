@@ -1,6 +1,7 @@
 import prisma from "./client";
 
-export const getTodo = async () => {
+//GET
+export const getUsers = async () => {
   try {
     const users = await prisma.users.findMany({});
     return users;
@@ -8,6 +9,16 @@ export const getTodo = async () => {
     return error
   }
 };
+
+export const getSingleUser = async ({email}: {email: any}) => {
+  try {
+    await prisma.users.findUnique({
+      where: {email}
+    })
+  } catch (error) {
+    return error
+  }
+}
 
 export const createUser = async () => {
   try {
@@ -27,7 +38,7 @@ export const createUser = async () => {
 
 export const createTodos = async () => {
   try {
-    const harry = await getTodo()
+    const harry = await getUsers()
     const todos = await prisma.todos.create({
       data: {
         todo: "kill voldemort",
