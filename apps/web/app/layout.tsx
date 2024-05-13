@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-black text-white dark">
       <body className={inter.className}>
         <Providers>
           {children}

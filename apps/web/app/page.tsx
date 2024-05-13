@@ -11,7 +11,8 @@ export default function Page() {
 
   console.log(MESSAGE)
   return (
-    <main className="bg-slate-800 text-white h-screen">
+    <main>
+      {/* className="bg-slate-800 text-white h-screen" */}
       <Button appName="web">
         Click me!
       </Button>      
