@@ -1,5 +1,7 @@
-import { createUser } from "@repo/db";
-import { NextRequest, NextResponse } from "next/server"
+import { createUser, getUsers } from "@repo/db";
+import { type SignUpType, signupSchema } from "@repo/validation-schema";
+import { NextRequest, NextResponse } from "next/server";
+
 
 interface CreatedUserType {
   id: string,
@@ -13,11 +15,41 @@ interface CreatedUserType {
   updatedAt: Date;
 }
 
+export const GET = async() => {
+  try {
+    const allUsers = await getUsers() as CreatedUserType;
+    return NextResponse.json({
+      message: "all users",
+      data: allUsers
+    })
+  } catch (error) {
+    return error
+  }
+}
+
 export const POST = async (req: NextRequest) => {
   try {
-    const reqBody = await req.json();
-    console.log("body", reqBody);
     //_validations
+    //no empty
+    const reqBody: SignUpType = await req.json();
+    const reqBodyRes = signupSchema.safeParse(reqBody);
+    console.log("body", reqBody);
+    console.log("parse body", reqBodyRes);
+    console.log("parse body data", reqBodyRes.data);//undefined - empty string
+
+    if(!reqBody){
+      return NextResponse.json({
+        message: "Body can not be empty"
+      },
+    {status: 400})
+    }
+    
+    if(!reqBodyRes.data){
+      return NextResponse.json({
+        message: "All fields are required"
+      },
+    {status: 400})
+    }
     const createdUser = await createUser(reqBody) as CreatedUserType;
     console.log("created user from api", createdUser);
 
@@ -26,6 +58,9 @@ export const POST = async (req: NextRequest) => {
       data: createdUser
     })
   } catch (error: any) {
-    return error.message
+    return NextResponse.json({
+      error: error.message
+    },
+  {status: 500})
   }
 }
