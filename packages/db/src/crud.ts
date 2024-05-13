@@ -10,27 +10,35 @@ export const getUsers = async () => {
   }
 };
 
-export const getSingleUser = async ({email}: {email: any}) => {
+export const getSingleUser = async (email: string) => {
   try {
-    await prisma.users.findUnique({
+    console.log("func: ", email);
+    
+    const singleUser = await prisma.users.findUnique({
       where: {email}
     })
+    return singleUser;
   } catch (error) {
     return error
   }
 }
 
-export const createUser = async () => {
+interface InputTypes {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string
+}
+
+export const createUser = async (params: InputTypes) => {
   try {
+    const {firstName, lastName, email, password} = params
     const user = await prisma.users.create({
-      data: {
-        firstName: "harry",
-        lastName: "potter",
-        email: "harry@potter.com",
-        password: "lumosmaxima"
-      }
+      data: {firstName, lastName, email, password}
     })
-    return user
+    console.log("created user", user);
+    
+    return user;
   } catch (error) {
     return error
   }
