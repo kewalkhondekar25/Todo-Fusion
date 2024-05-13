@@ -1,7 +1,7 @@
 import { createUser, getUsers } from "@repo/db";
 import { type SignUpType, signupSchema } from "@repo/validation-schema";
 import { NextRequest, NextResponse } from "next/server";
-
+import bcrypt from "bcrypt"
 
 interface CreatedUserType {
   id: string,
@@ -36,21 +36,30 @@ export const POST = async (req: NextRequest) => {
     console.log("body", reqBody);
     console.log("parse body", reqBodyRes);
     console.log("parse body data", reqBodyRes.data);//undefined - empty string
-
+    //empty body
     if(!reqBody){
       return NextResponse.json({
         message: "Body can not be empty"
       },
     {status: 400})
     }
-    
+    //empty fields
     if(!reqBodyRes.data){
       return NextResponse.json({
         message: "All fields are required"
       },
     {status: 400})
-    }
-    const createdUser = await createUser(reqBody) as CreatedUserType;
+    };
+    const {firstName, lastName, email, password} = reqBody;
+    //hash pwd
+    const hashedPwd = await bcrypt.hash(password, 10);
+    console.log("hashed pwd", hashedPwd);
+    //dehash pwd
+    // const decode = await bcrypt.compare(password, hashedPwd);
+    // console.log("decoded pwdw", decode);
+    const data = {firstName, lastName, email, password: hashedPwd};
+    const createdUser = await createUser(data) as CreatedUserType;
+    // const createdUser = await createUser(reqBody) as CreatedUserType;
     console.log("created user from api", createdUser);
 
     return NextResponse.json({
