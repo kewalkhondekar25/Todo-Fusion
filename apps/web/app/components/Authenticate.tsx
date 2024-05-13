@@ -13,6 +13,9 @@ const Authenticate = () => {
       <button onClick={() => router.push("/signup")}>
         Sign Up  
       </button>  
+      <button onClick={() => router.push("/dashboard")}>
+        Dashboard
+      </button>
     </div>
   )
 }

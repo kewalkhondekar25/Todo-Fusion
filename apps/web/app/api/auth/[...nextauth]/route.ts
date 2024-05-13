@@ -1,6 +1,7 @@
 import { getSingleUser } from "@repo/db";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt"
 
 interface CreatedUserType {
   id: string,
@@ -29,16 +30,21 @@ const handler = NextAuth({
       async authorize(credentials: any): Promise<any> {
         console.log(credentials.email);
         try {
+          //_validations
+          //check email
           const user = await getSingleUser(credentials.email) as CreatedUserType;
           console.log("user from db", user);
-          //_validations
           if(!user) {
             return null;
           }
-
-          if(user.password === credentials.password) {
-            return user
+          //check pwd
+          const hashPwd = user.password;
+          const decode = await bcrypt.compare(credentials.password, hashPwd);
+          console.log("decoded pwd: ", decode);
+          if(!decode){
+            return null
           }
+          return user;
         } catch (error: any) {
           return error.message
         }
