@@ -32,7 +32,7 @@ const page = () => {
   }
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/signup", signUpDetails);
+      await axios.post("http://localhost:3000/api/signup", signUpDetails);
       alert(JSON.stringify(signUpDetails))
     } catch (error) {
       console.log(error);

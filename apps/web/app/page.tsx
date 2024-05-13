@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { Button } from "@repo/ui/button";
 import { createUser, createTodos } from "@repo/db";
 import { MESSAGE } from "@repo/validation-schema";
+import Authenticate from "./components/Authenticate";
 
 
 function Gradient({
@@ -91,7 +92,8 @@ export default async function Page(): Promise<JSX.Element> {
 
       <Button appName="web" className={styles.button}>
         Click me!
-      </Button>
+      </Button>      
+      <Authenticate/>
 
       <div className={styles.hero}>
         <div className={styles.heroContent}>
