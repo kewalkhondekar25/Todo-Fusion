@@ -6,12 +6,12 @@ import { useRouter } from 'next/navigation'
 const Authenticate = () => {
   const router = useRouter()
   return (
-    <div>
-      <button onClick={() => signIn()}>
+    <div className='flex flex-col w-12'>
+      <button className='bg-purple-500' onClick={() => signIn()}>
         SignIn
       </button>
       <button onClick={() => router.push("/signup")}>
-        Sign Up  
+        SignUp  
       </button>  
       <button onClick={() => router.push("/dashboard")}>
         Dashboard
