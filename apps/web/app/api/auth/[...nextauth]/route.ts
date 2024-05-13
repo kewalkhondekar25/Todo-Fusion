@@ -25,13 +25,15 @@ const handler = NextAuth({
       async authorize(credentials: any): Promise<any> {
         console.log(credentials.email);
         try {
-          const user = await getSingleUser(credentials.email) as CreatedUserType
-          if (user.password === credentials.password) {
-            return { user }
+          const user = await getSingleUser(credentials.email) as CreatedUserType;
+          console.log("user from db", user);
+          //_validations
+          if(!user) {
+            return null;
           }
 
-          if (!user) {
-            return null;
+          if(user.password === credentials.password) {
+            return user
           }
         } catch (error: any) {
           return error.message
