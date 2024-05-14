@@ -7,12 +7,38 @@ import {
   IconBrandGithub,
   IconBrandGoogle,
 } from "@tabler/icons-react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+const signinSchema = yup.object({
+  email: yup.string().email("Invalid email address").required("Required"),
+  password: yup.string().required("Required"),
+});
 
 export function SignupFormDemo() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
-  };
+
+  // console.log(signinSchema);
+  
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    validationSchema: signinSchema,
+    onSubmit: values => {
+      console.log(values)
+    }
+    
+  })
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   console.log("Form submitted");
+  // };
+
+  console.log("Formik values:", formik.values);
+  console.log("Formik errors:", formik.errors);
+  console.log("Formik touched:", formik.touched);
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -23,14 +49,27 @@ export function SignupFormDemo() {
       {/* Unlock Your Productivity Potential: Seamlessly Elevate with Fusion */}
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={formik.handleSubmit}>
+      {/* onSubmit={handleSubmit} */}
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="Your supa&apos; fancy Email" type="email" />
+          <Input id="email" name="email" placeholder="Your supa&apos; fancy Email" type="email" 
+          onChange={formik.handleChange} 
+          onBlur={formik.handleBlur} 
+          value={formik.values.email} />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="text-red-500">{formik.errors.email}</div>
+          ) : null}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" name="password" placeholder="••••••••" type="password" 
+          onChange={formik.handleChange} 
+          onBlur={formik.handleBlur} 
+          value={formik.values.password} />
+          {formik.touched.password && formik.errors.password ? (
+            <div className="text-red-500">{formik.errors.password}</div>
+          ) : null}
         </LabelInputContainer>
 
         <button
