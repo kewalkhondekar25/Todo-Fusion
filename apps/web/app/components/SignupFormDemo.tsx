@@ -9,15 +9,15 @@ import {
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import {signIn} from "next-auth/react"
+import { log } from "console";
 
 const signinSchema = yup.object({
-  email: yup.string().email("Invalid email address").required("Required"),
-  password: yup.string().required("Required"),
+  email: yup.string().email("Whoops! Looks like the e-mail is Invalid.").required("Whoops! Looks like the e-mail is Required."),
+  password: yup.string().required("Whoops! Looks like the Password is Required."),
 });
 
 export function SignupFormDemo() {
-
-  // console.log(signinSchema);
   
   const formik = useFormik({
     initialValues: {
@@ -25,19 +25,16 @@ export function SignupFormDemo() {
       password: ""
     },
     validationSchema: signinSchema,
-    onSubmit: values => {
-      console.log(values)
+    onSubmit: async (value) => {
+      await signIn("credentials", {
+        email: value.email,
+        password: value.password,
+        redirect: false
+      })
+      
     }
     
   })
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   console.log("Form submitted");
-  // };
-
-  console.log("Formik values:", formik.values);
-  console.log("Formik errors:", formik.errors);
-  console.log("Formik touched:", formik.touched);
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -50,7 +47,6 @@ export function SignupFormDemo() {
       </p>
 
       <form className="my-8" onSubmit={formik.handleSubmit}>
-      {/* onSubmit={handleSubmit} */}
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input id="email" name="email" placeholder="Your supa&apos; fancy Email" type="email" 
@@ -58,7 +54,7 @@ export function SignupFormDemo() {
           onBlur={formik.handleBlur} 
           value={formik.values.email} />
           {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500">{formik.errors.email}</div>
+            <div className="text-xs text-red-500">{formik.errors.email}</div>
           ) : null}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
@@ -68,7 +64,7 @@ export function SignupFormDemo() {
           onBlur={formik.handleBlur} 
           value={formik.values.password} />
           {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500">{formik.errors.password}</div>
+            <div className="text-xs text-red-500">{formik.errors.password}</div>
           ) : null}
         </LabelInputContainer>
 
@@ -76,13 +72,13 @@ export function SignupFormDemo() {
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
-          Sign up &rarr;
+          Sign In &rarr;
           <BottomGradient />
         </button>
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
-
-        <div className="flex flex-col space-y-4">
+      </form>
+      <div className="flex flex-col space-y-4">
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
@@ -95,7 +91,9 @@ export function SignupFormDemo() {
           </button>
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
+            onClick={async () => {
+              await signIn("google")
+            } }
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
@@ -104,7 +102,6 @@ export function SignupFormDemo() {
             <BottomGradient />
           </button>
         </div>
-      </form>
     </div>
   );
 }
