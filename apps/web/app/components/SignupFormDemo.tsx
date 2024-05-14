@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "../utils/cn";
@@ -9,16 +9,20 @@ import {
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import {signIn} from "next-auth/react"
-import { log } from "console";
+import { signIn, useSession } from "next-auth/react"
+
 
 const signinSchema = yup.object({
   email: yup.string().email("Whoops! Looks like the e-mail is Invalid.").required("Whoops! Looks like the e-mail is Required."),
   password: yup.string().required("Whoops! Looks like the Password is Required."),
 });
 
+
+
 export function SignupFormDemo() {
-  
+  const [signInError, setSignInError] = useState<string | null>(null);
+  const [passwordIncorrect, setPasswordIncorrect] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,14 +30,23 @@ export function SignupFormDemo() {
     },
     validationSchema: signinSchema,
     onSubmit: async (value) => {
-      await signIn("credentials", {
-        email: value.email,
-        password: value.password,
-        redirect: false
-      })
-      
+      try {
+        const result = await signIn("credentials", {
+          email: value.email,
+          password: value.password,
+          redirect: true
+        })
+        if (result && result.error === "CredentialsSignin") {
+          setPasswordIncorrect(true);
+          setSignInError(null);
+        } else {
+          setPasswordIncorrect(false);
+          setSignInError(null);
+        }
+      } catch (error: any) {
+        console.log(error);
+      }
     }
-    
   })
 
   return (
@@ -66,6 +79,9 @@ export function SignupFormDemo() {
           {formik.touched.password && formik.errors.password ? (
             <div className="text-xs text-red-500">{formik.errors.password}</div>
           ) : null}
+          {passwordIncorrect && (
+            <div className="text-xs text-red-500">Whoops! Looks like the e-mail or password is invalid.</div>
+          )}
         </LabelInputContainer>
 
         <button
@@ -75,6 +91,10 @@ export function SignupFormDemo() {
           Sign In &rarr;
           <BottomGradient />
         </button>
+        
+        {signInError && (
+          <div className="text-red-500 mt-2">{signInError}</div>
+        )}  
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
       </form>
