@@ -40,7 +40,7 @@ const handler = NextAuth({
           if(!user) {
             return null;
           }
-          
+
           const decode = await bcrypt.compare(credentials.password, user.password);
           console.log("decoded pwd: ", decode);
           if(!decode){
@@ -62,7 +62,10 @@ const handler = NextAuth({
       authorization: {params: {scope: "profile"}}
     })
   ],
-  secret: process.env.NEXTAUTH_URL
+  secret: process.env.NEXTAUTH_URL,
+  pages: {
+    signIn: "/signin"
+  }
 });
 
 export { handler as GET, handler as POST }
