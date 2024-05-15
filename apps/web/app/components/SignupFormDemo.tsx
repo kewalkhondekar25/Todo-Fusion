@@ -9,7 +9,9 @@ import {
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { signIn, useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
+import { NextURL } from "next/dist/server/web/next-url";
+import { useSearchParams } from 'next/navigation'
 
 
 const signinSchema = yup.object({
@@ -20,6 +22,10 @@ const signinSchema = yup.object({
 
 
 export function SignupFormDemo() {
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("error"));
+  
+  
   const [signInError, setSignInError] = useState<string | null>(null);
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
 
@@ -29,14 +35,15 @@ export function SignupFormDemo() {
       password: ""
     },
     validationSchema: signinSchema,
-    onSubmit: async (value) => {
+    onSubmit: async (value, { setSubmitting }) => {
       try {
         const result = await signIn("credentials", {
           email: value.email,
           password: value.password,
-          redirect: true
+          redirect: false
         })
-        if (result && result.error === "CredentialsSignin") {
+        if (result?.error === "CredentialsSignin") {
+          alert("wrong credentials")
           setPasswordIncorrect(true);
           setSignInError(null);
         } else {
@@ -45,6 +52,8 @@ export function SignupFormDemo() {
         }
       } catch (error: any) {
         console.log(error);
+      }finally {
+        setSubmitting(false); // Set submitting to false after form submission
       }
     }
   })
@@ -59,7 +68,10 @@ export function SignupFormDemo() {
       {/* Unlock Your Productivity Potential: Seamlessly Elevate with Fusion */}
       </p>
 
-      <form className="my-8" onSubmit={formik.handleSubmit}>
+      <form className="my-8" onSubmit={(e) => {
+        e.preventDefault(); // Prevent default form submission
+        formik.handleSubmit(); // Call custom submit handler
+      }}>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input id="email" name="email" placeholder="Your supa&apos; fancy Email" type="email" 

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
+import ServerSession from '../components/ServerSession';
 // import { getServerSession } from "next-auth"
 
 const page = () => {
@@ -9,12 +10,12 @@ const page = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    // Redirect only if session data exists and status is 'authenticated'
-    if (session?.user && status === "authenticated") {
-      router.push("/dashboard");
-    }
-  }, [session, status, router]);
+  // useEffect(() => {
+  //   // Redirect only if session data exists and status is 'authenticated'
+  //   if (session?.user && status === "authenticated") {
+  //     router.push("/dashboard");
+  //   }
+  // }, [session, status, router]);
   return (
     <div>
       <h3>dashboard page</h3>
