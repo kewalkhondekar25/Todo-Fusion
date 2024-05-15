@@ -20,6 +20,8 @@ const page = () => {
     <div>
       <h3>dashboard page</h3>
       <p>{JSON.stringify(session)}</p>
+      <h3>Hello {JSON.stringify(session?.user?.name)}</h3>
+      <h4>Your email is {JSON.stringify(session?.user?.email)}</h4>
       <button onClick={() => signOut()}>
         Log Out
       </button>
