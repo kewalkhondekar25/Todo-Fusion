@@ -58,7 +58,7 @@ export const NEXT_AUTH = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      authorization: {params: {scope: "profile"}}
+      authorization: {params: {scope: "profile email"}}
     })
   ],
   secret: process.env.NEXTAUTH_URL,
