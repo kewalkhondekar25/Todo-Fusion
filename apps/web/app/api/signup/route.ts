@@ -1,4 +1,4 @@
-import { createUser, getUsers } from "@repo/db";
+import { createUser, getUsers, getSingleUser } from "@repo/db";
 import { type SignUpType, signupSchema } from "@repo/validation-schema";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
@@ -51,6 +51,14 @@ export const POST = async (req: NextRequest) => {
     {status: 400})
     };
     const {firstName, lastName, email, password} = reqBody;
+    //existing email
+    const existingEmail = await getSingleUser(email)
+    if(existingEmail){
+      return NextResponse.json({
+        message: "email address already exists"
+      },
+    {status: 409})
+    }
     //hash pwd
     const hashedPwd = await bcrypt.hash(password, 10);
     console.log("hashed pwd", hashedPwd);
@@ -65,7 +73,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       message: "user created",
       data: createdUser
-    },{status: 200})
+    },{status: 201})
   } catch (error: any) {
     return NextResponse.json({
       error: error.message
