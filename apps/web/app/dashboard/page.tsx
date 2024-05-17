@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
 import ServerSession from '../components/ServerSession';
+import ButtonDemo from '../components/ButtonDemo';
 // import { getServerSession } from "next-auth"
 
 const page = () => {
@@ -25,6 +26,10 @@ const page = () => {
       <button onClick={() => signOut()}>
         Log Out
       </button>
+      <h3>Count: 0</h3>
+      <ButtonDemo>
+        click to count
+      </ButtonDemo>
     </div>
   )
 }
