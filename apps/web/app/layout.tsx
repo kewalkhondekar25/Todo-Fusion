@@ -16,10 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en" className="bg-black text-white dark">
+    <html lang="en" className="bg-[#1F1F1F] text-white dark">
       <body className={inter.className}>
         <Providers>
-          {children}
+          <main>
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

@@ -13,7 +13,7 @@ const page = () => {
 
   useEffect(() => {
     if (session?.user && status === 'authenticated') {
-      router.push('/');
+      router.push('/dashboard');
     }
   }, [session, status, router]);
 
