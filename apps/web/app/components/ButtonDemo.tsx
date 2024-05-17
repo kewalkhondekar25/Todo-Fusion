@@ -1,15 +1,19 @@
 "use client"
 import React from 'react'
+import { useAppDispatch } from '../../lib/store/hooks/hooks'
+import { Action, PayloadAction } from '@reduxjs/toolkit';
 
 interface ButtonProps {
   children: React.ReactNode,
-  className?: string
+  className?: string,
+  onClick: () => Action | PayloadAction
 }
 
-const ButtonDemo = ({children}: ButtonProps) => {
+const ButtonDemo = ({children, onClick}: ButtonProps) => {
+  const dispatch = useAppDispatch();
   return (
     <button
-      onClick={() => alert("clicked from button ui")}>
+      onClick={() => dispatch(onClick())}>
       {children}
     </button>
   )

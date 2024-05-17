@@ -4,12 +4,18 @@ import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
 import ServerSession from '../components/ServerSession';
 import ButtonDemo from '../components/ButtonDemo';
+import { useAppDispatch, useAppSelector } from '../../lib/store/hooks/hooks';
+import { increase, decrease, setStatus } from '../../lib/store/features/counter/counterSlice';
 // import { getServerSession } from "next-auth"
 
 const page = () => {
+  //RTK
+  const {count, decision} = useAppSelector(state => state.counter)
+
   // const session = await getServerSession();
   const { data: session, status } = useSession();
   const router = useRouter();
+  const num = 69;
 
   // useEffect(() => {
   //   // Redirect only if session data exists and status is 'authenticated'
@@ -26,10 +32,26 @@ const page = () => {
       <button onClick={() => signOut()}>
         Log Out
       </button>
-      <h3>Count: 0</h3>
-      <ButtonDemo>
-        click to count
+      <hr />
+      <ButtonDemo onClick={increase}>
+        +
       </ButtonDemo>
+      <h3>Count: {count}</h3>
+      <ButtonDemo onClick={decrease}>
+        -
+      </ButtonDemo>
+      <hr />
+      <div>
+        <h3>Status: {decision}</h3>
+        <div className='flex flex-col'>
+          <ButtonDemo onClick={() => setStatus("active")}>
+            Set Status - Active
+            </ButtonDemo>
+          <ButtonDemo onClick={() => setStatus("inactive")}>
+            Set Status - Inactive
+            </ButtonDemo>
+        </div>
+      </div>
     </div>
   )
 }
