@@ -1,9 +1,12 @@
+
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import StoreProvider from "./StoreProvider";
 import Slider from "./components/Slider";
+import { Button } from "./components/ui/button";
+import { AlertButton } from "./components/buttons/Buttons";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +26,7 @@ export default function RootLayout({
         <Providers>
           <StoreProvider>
             <Slider/>
+            {/* <AlertButton/> */}
             {children}
           </StoreProvider>
         </Providers>
