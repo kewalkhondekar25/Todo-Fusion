@@ -6,7 +6,7 @@ import { Action, PayloadAction } from '@reduxjs/toolkit';
 interface ButtonProps {
   children: React.ReactNode,
   className?: string,
-  onClick: () => Action | PayloadAction
+  onClick: () => Action | PayloadAction<any>
 }
 
 const ButtonDemo = ({children, onClick}: ButtonProps) => {

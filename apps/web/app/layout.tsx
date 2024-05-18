@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import StoreProvider from "./StoreProvider";
+import Slider from "./components/Slider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en" className="bg-[#1F1F1F] text-white dark">
+    <html lang="en" className="dark">
       <body className={inter.className}>
         <Providers>
           <StoreProvider>
-          <main>
+            <Slider/>
             {children}
-          </main>
           </StoreProvider>
         </Providers>
       </body>

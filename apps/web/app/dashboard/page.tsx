@@ -6,6 +6,7 @@ import ServerSession from '../components/ServerSession';
 import ButtonDemo from '../components/ButtonDemo';
 import { useAppDispatch, useAppSelector } from '../../lib/store/hooks/hooks';
 import { increase, decrease, setStatus } from '../../lib/store/features/counter/counterSlice';
+import { Button } from '../components/ui/button';
 // import { getServerSession } from "next-auth"
 
 const page = () => {
@@ -52,6 +53,10 @@ const page = () => {
             </ButtonDemo>
         </div>
       </div>
+      <hr />
+      <Button>
+        Shadcn button
+      </Button>
     </div>
   )
 }
