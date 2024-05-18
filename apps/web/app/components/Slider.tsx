@@ -32,7 +32,7 @@ const Slider = () => {
   ];
   
   return (
-    <section className='absolute bg-[#191919] flex'>
+    <section className='absolute bg-[#191919] flex h-full'>
       <nav>
         {
           fruits.map(item => {

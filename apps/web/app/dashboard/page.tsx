@@ -7,11 +7,14 @@ import ButtonDemo from '../components/ButtonDemo';
 import { useAppDispatch, useAppSelector } from '../../lib/store/hooks/hooks';
 import { increase, decrease, setStatus } from '../../lib/store/features/counter/counterSlice';
 import { Button } from '../components/ui/button';
+import { SliderToggleBtn } from '../components/buttons/Buttons';
+import Header from '../components/Header';
 // import { getServerSession } from "next-auth"
 
 const page = () => {
   //RTK
-  const {count, decision} = useAppSelector(state => state.counter)
+  const {count, decision} = useAppSelector(state => state.counter);
+  const {isToggle} = useAppSelector(state => state.slider);
 
   // const session = await getServerSession();
   const { data: session, status } = useSession();
@@ -57,6 +60,10 @@ const page = () => {
       <Button>
         Shadcn button
       </Button>
+      <hr />
+      <div>isOpen: {isToggle? "true" : "false"}</div>
+      <SliderToggleBtn/>
+      {isToggle && <Header/>}
     </div>
   )
 }

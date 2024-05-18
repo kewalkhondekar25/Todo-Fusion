@@ -1,4 +1,3 @@
-
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -6,7 +5,9 @@ import { Providers } from "./providers";
 import StoreProvider from "./StoreProvider";
 import Slider from "./components/Slider";
 import { Button } from "./components/ui/button";
-import { AlertButton } from "./components/buttons/Buttons";
+import { AlertButton, SliderToggleBtn } from "./components/buttons/Buttons";
+import Header from "./components/Header";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +21,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return (
+    return (
     <html lang="en" className="dark">
       <body className={inter.className}>
         <Providers>
           <StoreProvider>
-            <Slider/>
-            {/* <AlertButton/> */}
+            {/* <Header/> */}
             {children}
           </StoreProvider>
         </Providers>
