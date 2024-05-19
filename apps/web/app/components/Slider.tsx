@@ -5,6 +5,7 @@ import { SliderToggleBtn } from './buttons/Buttons';
 import { useSession } from 'next-auth/react';
 import {Pencil2Icon} from "@radix-ui/react-icons"
 import {CalendarIcon} from "@radix-ui/react-icons"
+import Link from 'next/link';
 
 
 
@@ -41,12 +42,14 @@ const Slider = () => {
                   const today = new Date();
                   const date = today.getDate();  
                   return(
-                    <div key={i} className='flex place-items-center gap-1'>
-                      {item === "today" ? date : IconComponent && <IconComponent className='' />}
-                      <ul>
-                        <li className='text-sm capitalize'>{item}</li>
-                      </ul>
-                    </div>
+                    <Link href={`/${item}`} key={i}>
+                      <div className='flex place-items-center gap-1'>
+                        {item === "today" ? date : IconComponent && <IconComponent className='' />}
+                        <ul>
+                          <li className='text-sm capitalize'>{item}</li>
+                        </ul>
+                      </div>
+                    </Link>
                   )
                 })
               }

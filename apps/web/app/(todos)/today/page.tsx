@@ -5,9 +5,8 @@ import Header from '../../components/Header'
 
 const page = () => {
   return (
-    <div className='relative flex justify-center place-items-center'>
-      <TodoButton/>
-      <SliderToggleBtn/>
+    <div className='flex justify-center place-items-center'>
+      this is today
     </div>
   )
 }
