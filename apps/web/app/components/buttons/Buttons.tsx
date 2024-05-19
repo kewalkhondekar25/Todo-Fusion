@@ -2,7 +2,7 @@
 import { Button } from "../ui/button"
 import { useAppDispatch } from "../../../lib/store/hooks/hooks"
 import { toggle } from "../../../lib/store/features/slider/sliderSlice"
-
+import {HamburgerMenuIcon} from "@radix-ui/react-icons"
 
 
 export const AlertButton = () => {
@@ -18,5 +18,7 @@ export const SliderToggleBtn = () => {
   const handleToggle = () => {
     dispatch(toggle())
   }
-  return <Button onClick={handleToggle}>Toggle</Button>
+  return <Button variant="ghost" onClick={handleToggle}>
+    <HamburgerMenuIcon/>
+  </Button>
 }

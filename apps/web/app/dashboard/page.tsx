@@ -13,9 +13,6 @@ import Header from '../components/Header';
 
 const page = () => {
   //RTK
-  const {count, decision} = useAppSelector(state => state.counter);
-  const {isToggle} = useAppSelector(state => state.slider);
-
   // const session = await getServerSession();
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -37,33 +34,7 @@ const page = () => {
         Log Out
       </button>
       <hr />
-      <ButtonDemo onClick={increase}>
-        +
-      </ButtonDemo>
-      <h3>Count: {count}</h3>
-      <ButtonDemo onClick={decrease}>
-        -
-      </ButtonDemo>
-      <hr />
-      <div>
-        <h3>Status: {decision}</h3>
-        <div className='flex flex-col'>
-          <ButtonDemo onClick={() => setStatus("active")}>
-            Set Status - Active
-            </ButtonDemo>
-          <ButtonDemo onClick={() => setStatus("inactive")}>
-            Set Status - Inactive
-            </ButtonDemo>
-        </div>
-      </div>
-      <hr />
-      <Button>
-        Shadcn button
-      </Button>
-      <hr />
-      <div>isOpen: {isToggle? "true" : "false"}</div>
-      <SliderToggleBtn/>
-      {isToggle && <Header/>}
+      {/* <Header/> */}
     </div>
   )
 }

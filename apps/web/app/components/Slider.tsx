@@ -1,7 +1,12 @@
+"use client"
 import React from 'react'
 import { Button } from './ui/button';
+import { SliderToggleBtn } from './buttons/Buttons';
+import { useSession } from 'next-auth/react';
+
 
 const Slider = () => {
+  const { data: session, status } = useSession();
   const fruits: string[] = [
     "Apple",        // A
     "Banana",       // B
@@ -32,7 +37,7 @@ const Slider = () => {
   ];
   
   return (
-    <section className='absolute bg-[#191919] flex h-full'>
+    <section className='absolute top-0 bg-[#191919] flex justify-between h-full w-60'>
       <nav>
         {
           fruits.map(item => {
@@ -44,7 +49,7 @@ const Slider = () => {
           })
         }
       </nav>
-      <Button>Toggle</Button>
+      <SliderToggleBtn/>
     </section>
   )
 }
