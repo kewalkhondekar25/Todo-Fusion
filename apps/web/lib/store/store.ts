@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from "./features/counter/counterSlice"
 import sliderReducer from "./features/slider/sliderSlice"
+import checkReducer from "./features/checked/checkedSlice"
 
 //rtk nextjs setup
 export const makeStore = () => {
   return configureStore({
     reducer: {
       counter: counterReducer,
-      slider: sliderReducer
+      slider: sliderReducer,
+      checked: checkReducer
     }
   })
 }

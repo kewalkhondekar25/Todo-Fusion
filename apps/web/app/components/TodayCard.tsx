@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
@@ -10,40 +11,49 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card"
+import { Checkbox } from "./ui/checkbox"
 import { ListBulletIcon } from '@radix-ui/react-icons'
+import { TodaysTodoCheckBox } from './checkboxes/CheckBoxes'
+import { useAppSelector } from '../../lib/store/hooks/hooks'
+import NewTodo from './NewTodo'
+import DrawerComp from './dailog/Dailog'
 
 
 const TodayCard = () => {
+
+  const todos = ["wakeup early", "yoga 30 min", "grocery", "twitch stream"];
+  const {isChecked} = useAppSelector(state => state.checked);
+  console.log("is checked?", isChecked);
+  
   return (
-    <section>
+    <section className='relative'>
       <Card className="w-[350px] bg-[#292929] border-[#525252]">
       <CardHeader>
         <CardTitle>Today</CardTitle>
-        <CardDescription>
-          <div className='flex place-items-center gap-2'>
+        <CardDescription className='flex place-items-center gap-2'>
             <ListBulletIcon/>
-            <p>5 todos</p>
-          </div>
+            {todos.length} todos
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Name of your project" />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Framework</Label>
-            </div>
-          </div>
-        </form>
+        {
+          todos.map((item, i) => {
+            return(
+              <div key={i} className='flex place-items-center gap-3 mt-2'>
+                <TodaysTodoCheckBox value={item}/>
+                <div className={`${isChecked ? "line-through" : null}`}>
+                  {item}
+                </div>
+              </div>
+            )
+          })
+        }
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
-        <Button>Deploy</Button>
+      <CardFooter>
+          <DrawerComp/>
       </CardFooter>
     </Card>
+    {/* <NewTodo/> */}
     </section>
   )
 }
