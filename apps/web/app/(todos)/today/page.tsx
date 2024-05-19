@@ -1,13 +1,12 @@
 import React from 'react'
-import { SliderToggleBtn, TodoButton } from '../../components/buttons/Buttons'
-import Header from '../../components/Header'
+import TodayCard from '../../components/TodayCard'
 
 
 const page = () => {
   return (
-    <div className='flex justify-center place-items-center'>
-      this is today
-    </div>
+    <section className='flex justify-center place-items-center'>
+      <TodayCard/>
+    </section>
   )
 }
 

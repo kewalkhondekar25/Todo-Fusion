@@ -76,6 +76,6 @@
   }
 
   html.dark body {
-    background-color: #1F1F1F;
+    background-color: #1F1F1F; /*#1F1F1F || #09090B*/
     color: white; /* Adjust text color for better visibility in dark mode */
   }

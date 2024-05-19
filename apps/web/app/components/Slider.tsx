@@ -43,7 +43,7 @@ const Slider = () => {
                   const date = today.getDate();  
                   return(
                     <Link href={`/${item}`} key={i}>
-                      <div className='flex place-items-center gap-1'>
+                      <div className='flex place-items-center gap-2 mt-1'>
                         {item === "today" ? date : IconComponent && <IconComponent className='' />}
                         <ul>
                           <li className='text-sm capitalize'>{item}</li>
