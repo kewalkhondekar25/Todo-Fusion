@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from "./features/counter/counterSlice"
 import sliderReducer from "./features/slider/sliderSlice"
 import checkReducer from "./features/checked/checkedSlice"
+import addTodoReducer from "./features/todos/todoSlice"
 
 //rtk nextjs setup
 export const makeStore = () => {
@@ -9,7 +10,8 @@ export const makeStore = () => {
     reducer: {
       counter: counterReducer,
       slider: sliderReducer,
-      checked: checkReducer
+      checked: checkReducer,
+      todo: addTodoReducer
     }
   })
 }

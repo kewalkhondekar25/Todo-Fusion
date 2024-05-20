@@ -2,7 +2,11 @@
 import { Button } from "../ui/button"
 import { useAppDispatch } from "../../../lib/store/hooks/hooks"
 import { toggle } from "../../../lib/store/features/slider/sliderSlice"
+import { openAddTodo } from "../../../lib/store/features/todos/todoSlice"
+
 import {HamburgerMenuIcon} from "@radix-ui/react-icons"
+import { PlusIcon } from '@radix-ui/react-icons'
+
 
 
 export const AlertButton = () => {
@@ -21,4 +25,13 @@ export const SliderToggleBtn = () => {
   return <Button variant="ghost" onClick={handleToggle}>
     <HamburgerMenuIcon/>
   </Button>
+}
+
+//add/close new todo btn
+export const AddCloseTodoBtn = ({children}: {children: React.ReactElement}) => {
+  const dispatch = useAppDispatch();
+  const handleOpenCloseAddTodo = () => {
+    dispatch(openAddTodo())
+  }
+  return <Button onClick={handleOpenCloseAddTodo}>{children}</Button>
 }

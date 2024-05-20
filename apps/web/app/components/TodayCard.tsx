@@ -15,12 +15,16 @@ import { Checkbox } from "./ui/checkbox"
 import { ListBulletIcon, PlusIcon } from '@radix-ui/react-icons'
 import { TodaysTodoCheckBox } from './checkboxes/CheckBoxes'
 import { useAppSelector } from '../../lib/store/hooks/hooks'
+import { AddCloseTodoBtn } from './buttons/Buttons'
 import AddTodo from './AddTodo'
+
+
 
 const TodayCard = () => {
 
   const todos = ["wakeup early", "yoga 30 min", "grocery", "twitch stream", "walk", "dinner", "valorant"];
   const {isChecked} = useAppSelector(state => state.checked);
+  const {isAddTodoOpen} = useAppSelector(state => state.todo)
   console.log("is checked?", isChecked);
   
   return (
@@ -29,7 +33,7 @@ const TodayCard = () => {
       <CardHeader>
         <CardTitle>Today</CardTitle>
         <CardDescription className='flex place-items-center gap-2'>
-            <ListBulletIcon/>
+              <ListBulletIcon/>
             {todos.length} todos
         </CardDescription>
       </CardHeader>
@@ -48,13 +52,16 @@ const TodayCard = () => {
         }
       </CardContent>
       <CardFooter>
-        <Button>
-          <PlusIcon/>
-          Add Todo
-        </Button>
+        <AddCloseTodoBtn>
+            <div className='flex place-items-center gap-2'>
+              <PlusIcon/>
+              <span>Add Todo</span>
+            </div>
+        </AddCloseTodoBtn>
       </CardFooter>
     </Card>
-    <AddTodo/>
+    {isAddTodoOpen && <AddTodo/>}
+    {/* <AddTodo/> */}
     </section>
   )
 }

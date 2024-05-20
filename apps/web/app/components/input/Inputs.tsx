@@ -3,7 +3,7 @@ import { Input } from "../ui/input2"
 
 const Inputs = () => {
   return (
-    <Input type="text" className='border-white' placeholder="New Todo"/>
+    <Input type="text" name='newtodo' className='border-white' placeholder="New Todo"/>
   )
 }
 
