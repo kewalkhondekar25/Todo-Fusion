@@ -12,16 +12,14 @@ import {
   CardTitle,
 } from "./ui/card"
 import { Checkbox } from "./ui/checkbox"
-import { ListBulletIcon } from '@radix-ui/react-icons'
+import { ListBulletIcon, PlusIcon } from '@radix-ui/react-icons'
 import { TodaysTodoCheckBox } from './checkboxes/CheckBoxes'
 import { useAppSelector } from '../../lib/store/hooks/hooks'
-import NewTodo from './NewTodo'
-import DrawerComp from './dailog/Dailog'
-
+import AddTodo from './AddTodo'
 
 const TodayCard = () => {
 
-  const todos = ["wakeup early", "yoga 30 min", "grocery", "twitch stream"];
+  const todos = ["wakeup early", "yoga 30 min", "grocery", "twitch stream", "walk", "dinner", "valorant"];
   const {isChecked} = useAppSelector(state => state.checked);
   console.log("is checked?", isChecked);
   
@@ -50,10 +48,13 @@ const TodayCard = () => {
         }
       </CardContent>
       <CardFooter>
-          <DrawerComp/>
+        <Button>
+          <PlusIcon/>
+          Add Todo
+        </Button>
       </CardFooter>
     </Card>
-    {/* <NewTodo/> */}
+    <AddTodo/>
     </section>
   )
 }
