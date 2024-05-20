@@ -37,7 +37,7 @@ const AddTodo = () => {
                 </div>
               </div>
             </div>
-            <button>submit</button>
+            {/* <button>submit</button> */}
           </form>
         </CardContent>
         <CardFooter className='flex justify-between'>

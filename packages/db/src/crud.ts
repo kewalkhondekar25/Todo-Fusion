@@ -1,6 +1,6 @@
 import prisma from "./client";
 
-//GET
+//users crud
 export const getUsers = async () => {
   try {
     const users = await prisma.users.findMany({});
@@ -43,6 +43,15 @@ export const createUser = async (params: InputTypes) => {
     return error
   }
 }
+
+//todos crud
+export const getAllTodos = async () => {
+  return await prisma.todos.findMany({
+    orderBy: {
+      createdAt: "desc"
+    }
+  })
+};
 
 export const createTodos = async () => {
   try {
