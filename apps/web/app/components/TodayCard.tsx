@@ -1,8 +1,5 @@
 "use client"
 import React from 'react'
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
 import {
   Card,
   CardContent,
@@ -17,12 +14,12 @@ import { TodaysTodoCheckBox } from './checkboxes/CheckBoxes'
 import { useAppSelector } from '../../lib/store/hooks/hooks'
 import { AddCloseTodoBtn } from './buttons/Buttons'
 import AddTodo from './AddTodo'
-
+import { getAllTodos } from '@repo/db'
+import TestCard from './TestCard'
 
 
 const TodayCard = () => {
 
-  const todos = ["wakeup early", "yoga 30 min", "grocery", "twitch stream", "walk", "dinner", "valorant"];
   const {isChecked} = useAppSelector(state => state.checked);
   const {isAddTodoOpen} = useAppSelector(state => state.todo)
   console.log("is checked?", isChecked);
@@ -34,28 +31,15 @@ const TodayCard = () => {
         <CardTitle>Today</CardTitle>
         <CardDescription className='flex place-items-center gap-2'>
               <ListBulletIcon/>
-            {todos.length} todos
+            {69} todos
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        {
-          todos.map((item, i) => {
-            return(
-              <div key={i} className='flex place-items-center gap-3 mt-2'>
-                <TodaysTodoCheckBox value={item}/>
-                <div className={`${isChecked ? "line-through" : null}`}>
-                  {item}
-                </div>
-              </div>
-            )
-          })
-        }
-      </CardContent>
+      {/* <TestCard/> */}
       <CardFooter>
         <AddCloseTodoBtn>
             <div className='flex place-items-center gap-2'>
               <PlusIcon/>
-              <span>Add Todo</span>
+              {/* <span>Add Todo</span> */}
             </div>
         </AddCloseTodoBtn>
       </CardFooter>
