@@ -18,7 +18,7 @@ const Slider = () => {
   };
 
   return (
-    <section className='absolute top-0 bg-[#191919] h-full w-60'>
+    <section className='absolute z-10 top-0 bg-[#191919] h-screen w-60'>
       <div className='flex justify-between'>
         <div>
           <div className='flex justify-center place-items-center gap-2'>

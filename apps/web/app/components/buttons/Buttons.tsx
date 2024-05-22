@@ -33,5 +33,5 @@ export const AddCloseTodoBtn = ({children}: {children: React.ReactElement}) => {
   const handleOpenCloseAddTodo = () => {
     dispatch(openAddTodo())
   }
-  return <Button onClick={handleOpenCloseAddTodo}>{children}</Button>
+  return <Button onClick={handleOpenCloseAddTodo} type="submit">{children}</Button>
 }

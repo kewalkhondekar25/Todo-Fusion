@@ -53,15 +53,19 @@ export const getAllTodos = async () => {
     }
   })
 };
-
-export const createTodos = async () => {
+interface ReqBodyType {
+  todo: string,
+  payload: string
+}
+export const createTodos = async (reqBody: ReqBodyType) => {
+  const {todo, payload} = reqBody;
   try {
-    const harry = await getUsers()
+    const specificUser = await getSingleUser(payload)
     const todos = await prisma.todos.create({
       data: {
-        todo: "kill voldemort",
+        todo: todo,
         user: {
-          connect: {id: harry[0].id}
+          connect: {email: payload}
         }
       }
     })
