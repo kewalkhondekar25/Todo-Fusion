@@ -21,7 +21,7 @@ import TestCard from './TestCard'
 const TodayCard = () => {
 
   const {isChecked} = useAppSelector(state => state.checked);
-  const {isAddTodoOpen} = useAppSelector(state => state.todo)
+  const {isAddTodoOpen, todos} = useAppSelector(state => state.todo)
   console.log("is checked?", isChecked);
   
   return (
@@ -31,21 +31,23 @@ const TodayCard = () => {
         <CardTitle>Today</CardTitle>
         <CardDescription className='flex place-items-center gap-2'>
               <ListBulletIcon/>
-            {69} todos
+              {todos.length} todos
         </CardDescription>
       </CardHeader>
       <TestCard/>
       <CardFooter>
-        <AddCloseTodoBtn>
-            <div className='flex place-items-center gap-2'>
-              <PlusIcon/>
-              <span>New Todo</span>
-            </div>
-        </AddCloseTodoBtn>
+        {
+          isAddTodoOpen ? null : <AddCloseTodoBtn>
+          <div className='flex place-items-center gap-2'>
+            <PlusIcon/>
+            <span>New Todo</span>
+          </div>
+      </AddCloseTodoBtn>
+        }
+        
       </CardFooter>
     </Card>
     {isAddTodoOpen && <AddTodo/>}
-    {/* <AddTodo/> */}
     </section>
   )
 }

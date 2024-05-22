@@ -12,8 +12,6 @@ export const getUsers = async () => {
 
 export const getSingleUser = async (email: string) => {
   try {
-    console.log("func: ", email);
-    
     const singleUser = await prisma.users.findUnique({
       where: {email}
     })
@@ -45,14 +43,20 @@ export const createUser = async (params: InputTypes) => {
 }
 
 //todos crud
-export const getSingleUserTodos = async () => {
-  
+
+//all todos of single user
+export const getUserTodos = async () => {
+  //send email to get id
+  //use id to connect to user
 }
 
-export const getAllTodos = async () => {
+export const getAllTodos = async (userId: string) => {
   return await prisma.todos.findMany({
     orderBy: {
       createdAt: "desc"
+    },
+    where: {
+      usersId: userId
     }
   })
 };

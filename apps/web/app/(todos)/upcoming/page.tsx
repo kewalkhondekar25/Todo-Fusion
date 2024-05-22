@@ -6,7 +6,7 @@ const page = async () => {
   // const todos = await fetchTodos();
   return (
     <div className='flex justify-center place-items-center'>
-      <TodaysTodos/>
+      {/* <TodaysTodos/> */}
     </div>
   )
 }

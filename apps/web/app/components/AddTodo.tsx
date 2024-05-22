@@ -20,7 +20,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Input } from './ui/input2'
 import axios from 'axios'
-import DrawerComp from './DrawerComp'
+
 
 const addTodoSchema = yup.object({
   todo: yup.string().required("Whoops! Looks like New Todo is Required"),
@@ -55,7 +55,7 @@ const AddTodo = () => {
   })
   const [date, setDate] = useState<Date | undefined>(new Date());
   return (
-    <section className='absolute top-[325px] right-[100px]'>
+    <section className='absolute top-20 right-20'>
       <form onSubmit={(e) => {
         e.preventDefault();
         formik.handleSubmit()
