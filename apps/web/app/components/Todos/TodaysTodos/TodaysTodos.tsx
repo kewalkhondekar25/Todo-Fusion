@@ -4,7 +4,7 @@ import { getAllTodos } from '@repo/db'
 import { TodaysTodoCheckBox } from '../../checkboxes/CheckBoxes';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks';
-import {setTodos, setTodoComplete} from "../../../../lib/store/features/todos/todoSlice"
+import {setTodos, setAddedTodoStatus} from "../../../../lib/store/features/todos/todoSlice"
 import { Checkbox } from "../../ui/checkbox"
 
 type AllTodosType = {
@@ -17,7 +17,7 @@ type AllTodosType = {
 }
 const TodaysTodos = () => {
 
-  const {todos, todoCount, isTodoComplete} = useAppSelector(state => state.todo)
+  const {todos, todoCount} = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch();  
 
   const getTodaysTodo = async () => {
@@ -31,9 +31,17 @@ const TodaysTodos = () => {
     }
   };
 
-  // const handleCompleteTodo = () => {
-  //   // dispatch(setTodoComplete(!isTodoComplete))
-  // }
+  const handleCompleteTodo = async (todoId: string) => {
+    try {
+      //post id as payload
+      const response = await axios.post("/api/iscomplete", {id: todoId});
+      const data = response.data;
+      dispatch(setAddedTodoStatus(todoCount + 1))
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
 
   useEffect(() => {
     getTodaysTodo()
@@ -45,8 +53,15 @@ const TodaysTodos = () => {
         todos.map((item, i) => {
           return(
             <div key={i} className='flex place-items-center gap-2'>
-              <Checkbox onCheckedChange={}/>
-              <div>{item.todo}</div>
+              <Checkbox 
+                onCheckedChange={() => handleCompleteTodo(item.id)}
+                checked={item.isCompleted}
+                disabled={item.isCompleted}
+              />
+              
+              <div className={`${item.isCompleted ? 'line-through' : ''}`}>
+                {item.todo}
+              </div>
             </div>
           )
         })

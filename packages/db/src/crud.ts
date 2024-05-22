@@ -13,7 +13,7 @@ export const getUsers = async () => {
 export const getSingleUser = async (email: string) => {
   try {
     const singleUser = await prisma.users.findUnique({
-      where: {email}
+      where: { email }
     })
     return singleUser;
   } catch (error) {
@@ -30,12 +30,12 @@ interface InputTypes {
 
 export const createUser = async (params: InputTypes) => {
   try {
-    const {firstName, lastName, email, password} = params
+    const { firstName, lastName, email, password } = params
     const user = await prisma.users.create({
-      data: {firstName, lastName, email, password}
+      data: { firstName, lastName, email, password }
     })
     console.log("created user", user);
-    
+
     return user;
   } catch (error) {
     return error
@@ -51,33 +51,57 @@ export const getUserTodos = async () => {
 }
 
 export const getAllTodos = async (userId: string) => {
-  return await prisma.todos.findMany({
-    orderBy: {
-      createdAt: "desc"
-    },
-    where: {
-      usersId: userId
-    }
-  })
+  try {
+    return await prisma.todos.findMany({
+      orderBy: {
+        createdAt: "desc"
+      },
+      where: {
+        usersId: userId
+      }
+    })
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+
 interface ReqBodyType {
   todo: string,
   payload: string
 }
 export const createTodos = async (reqBody: ReqBodyType) => {
-  const {todo, payload} = reqBody;
+  const { todo, payload } = reqBody;
   try {
     const specificUser = await getSingleUser(payload)
     const todos = await prisma.todos.create({
       data: {
         todo: todo,
         user: {
-          connect: {email: payload}
+          connect: { email: payload }
         }
       }
     })
     return todos
   } catch (error) {
     return error
+  }
+}
+
+//UPDATE_TODOs
+
+export const updateCompleteTodo = async (todoId: string) => {
+  try {
+    const updatedTodo = await prisma.todos.update({
+      where: {
+        id: todoId
+      },
+      data: {
+        isCompleted: true
+      }
+    });
+    return updatedTodo;
+  } catch (error) {
+    console.log(error);
   }
 }
