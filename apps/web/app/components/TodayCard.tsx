@@ -34,7 +34,7 @@ const TodayCard = () => {
             {69} todos
         </CardDescription>
       </CardHeader>
-      {/* <TestCard/> */}
+      <TestCard/>
       <CardFooter>
         <AddCloseTodoBtn>
             <div className='flex place-items-center gap-2'>

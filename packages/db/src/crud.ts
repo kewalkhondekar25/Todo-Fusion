@@ -45,6 +45,7 @@ export const createUser = async (params: InputTypes) => {
 }
 
 //todos crud
+
 export const getAllTodos = async () => {
   return await prisma.todos.findMany({
     orderBy: {

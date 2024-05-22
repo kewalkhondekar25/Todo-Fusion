@@ -1,24 +1,43 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import { getAllTodos } from '@repo/db'
 import { TodaysTodoCheckBox } from '../../checkboxes/CheckBoxes';
+import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks';
+import {setTodos} from "../../../../lib/store/features/todos/todoSlice"
 
-const TodaysTodos = async () => {
-  const todos = await getAllTodos();
+
+const TodaysTodos = () => {
+
+  const dispatch = useAppDispatch();  
+  const getTodaysTodo = async () => {
+    try {
+      const response = axios.get("/api/todaystodos");
+      const data = (await response).data;
+      dispatch(setTodos(data))
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getTodaysTodo();
+  }, [])  
   return (
     <>
-      {/* <div id="todo-count" data-count={todos.length}></div> */}
-      {
+      {/* {
         todos.map(item => {
           return (
             <div key={item.id}>
-              {/* <TodaysTodoCheckBox value={item.todo}/> */}
+              
               <span>{item.todo}</span>
             </div>
           )
         })
-      }
+      } */}
     </>
   )
 }
+{/* <TodaysTodoCheckBox value={item.todo}/> */}
 
 export default TodaysTodos
