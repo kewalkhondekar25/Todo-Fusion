@@ -8,8 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card"
-import { useAppDispatch } from "../../lib/store/hooks/hooks"
-import { openAddTodo, setTodos } from "../../lib/store/features/todos/todoSlice"
+import { useAppDispatch, useAppSelector } from "../../lib/store/hooks/hooks"
+import { openAddTodo,setAddedTodoStatus } from "../../lib/store/features/todos/todoSlice"
 
 import PrioritySelect from './priority/PrioritySelect'
 import { TimePickerDemo } from './TimePicker'
@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Input } from './ui/input2'
 import axios from 'axios'
+import DrawerComp from './DrawerComp'
 
 const addTodoSchema = yup.object({
   todo: yup.string().required("Whoops! Looks like New Todo is Required"),
@@ -30,7 +31,8 @@ const addTodoSchema = yup.object({
 const AddTodo = () => {
 
   const session = useSession();
-  const payload = session.data?.user?.email
+  const payload = session.data?.user?.email;
+  const {todoCount} = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
@@ -42,8 +44,9 @@ const AddTodo = () => {
       try {
         const response = axios.post("/api/todaystodos", value);
         const data = (await response).data;
-        alert(JSON.stringify(value))
-        resetForm()
+        alert(JSON.stringify(value));
+        resetForm();
+        dispatch(setAddedTodoStatus(todoCount + 1));
         dispatch(openAddTodo())
       } catch (error) {
         console.log(error);
@@ -57,13 +60,13 @@ const AddTodo = () => {
         e.preventDefault();
         formik.handleSubmit()
       }}>
-      <Card className="w-[400px] bg-[#383838] border-[#525252]">
-        <CardHeader>
-          <CardTitle>New Todo</CardTitle>
-          <CardDescription>Add todo, Set Priority & Reminder</CardDescription>
-        </CardHeader>
-        <CardContent>
-            
+        <Card className="w-[400px] bg-[#383838] border-[#525252]">
+          <CardHeader>
+            <CardTitle>New Todo</CardTitle>
+            <CardDescription>Add todo, Set Priority & Reminder</CardDescription>
+          </CardHeader>
+          <CardContent>
+
             <div>
               <Input
                 className='border-white'
@@ -73,9 +76,9 @@ const AddTodo = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.todo} />
-                {formik.touched.todo && formik.errors.todo ? (
-            <div className="text-xs text-red-500">{formik.errors.todo}</div>
-          ) : null}
+              {formik.touched.todo && formik.errors.todo ? (
+                <div className="text-xs text-red-500">{formik.errors.todo}</div>
+              ) : null}
               <div className='flex justify-between place-items-center'>
                 <div className='mt-5'>
                   <PrioritySelect />
@@ -85,17 +88,17 @@ const AddTodo = () => {
                 </div>
               </div>
             </div>
-        </CardContent>
-        <CardFooter className='flex justify-between'>
-          <AddCloseTodoBtn>
-            <span>Close</span>
-          </AddCloseTodoBtn>
-          {/* <AddCloseTodoBtn>
+          </CardContent>
+          <CardFooter className='flex justify-between'>
+            <AddCloseTodoBtn>
+              <span>Close</span>
+            </AddCloseTodoBtn>
+            {/* <AddCloseTodoBtn>
             <span>Add Todo</span>
           </AddCloseTodoBtn> */}
-          <Button>Add Todo</Button>  
-        </CardFooter>
-      </Card>
+            <Button>Add Todo</Button>
+          </CardFooter>
+        </Card>
       </form>
     </section>
   )

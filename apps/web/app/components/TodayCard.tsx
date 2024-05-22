@@ -39,7 +39,7 @@ const TodayCard = () => {
         <AddCloseTodoBtn>
             <div className='flex place-items-center gap-2'>
               <PlusIcon/>
-              {/* <span>Add Todo</span> */}
+              <span>New Todo</span>
             </div>
         </AddCloseTodoBtn>
       </CardFooter>

@@ -17,7 +17,7 @@ type AllTodosType = {
 }
 const TodaysTodos = () => {
 
-  const {todos} = useAppSelector(state => state.todo)
+  const {todos, todoCount} = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch();  
   const getTodaysTodo = async () => {
     try {
@@ -30,8 +30,9 @@ const TodaysTodos = () => {
     }
   }
   useEffect(() => {
-    getTodaysTodo();
-  }, [])  
+    getTodaysTodo()
+  }, [todoCount])
+
   return(
     <div>
       {

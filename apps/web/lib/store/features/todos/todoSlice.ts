@@ -11,13 +11,15 @@ type AllTodosType = {
 }
 
 type TodoType = {
-  isAddTodoOpen: boolean
-  todos: AllTodosType[] 
+  isAddTodoOpen: boolean;
+  todos: AllTodosType[];
+  todoCount: number 
 };
 
 const initialState: TodoType = {
   isAddTodoOpen: false,
-  todos: []
+  todos: [],
+  todoCount: 0
 };
 
 export const todoSlice = createSlice({
@@ -29,8 +31,11 @@ export const todoSlice = createSlice({
     },
     setTodos: (state, action: PayloadAction<AllTodosType[]>) => {
       state.todos = action.payload
+    },
+    setAddedTodoStatus: (state, action: PayloadAction<number>) => {
+      state.todoCount = action.payload
     }
   }
 });
-export const { openAddTodo, setTodos } = todoSlice.actions;
+export const { openAddTodo, setTodos, setAddedTodoStatus } = todoSlice.actions;
 export default todoSlice.reducer;
