@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hook
 import {setAddedTodoStatus, setTodos} from "../../../../lib/store/features/todos/todoSlice"
 import { Checkbox } from "../../ui/checkbox"
 import { toast } from 'sonner';
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 type AllTodosType = {
   id: string;
@@ -57,15 +58,22 @@ const TodaysTodos = () => {
       {
         todos.map((item, i) => {
           return(
-            <div key={i} className='flex place-items-center gap-2'>
+            <div key={i} className='relative flex place-items-center gap-2'>
               <Checkbox 
                 onCheckedChange={() => handleCompleteTodo(item.id)}
                 checked={item.isCompleted}
                 disabled={item.isCompleted}
               />
-              
-              <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through' : ''}`}>
-                {item.todo}
+              <div className='flex-1 flex items-center group'>
+                <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through' : ''}flex-1`}>
+                  {item.todo}
+                </div>
+                <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
+                  <Pencil1Icon 
+                    className='h-5 w-5'
+                    onClick={() => alert("pencil")}/>
+                  <TrashIcon className='ms-2 h-5 w-5'/>
+                </div>
               </div>
             </div>
           )
