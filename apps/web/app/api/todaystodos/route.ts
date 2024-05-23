@@ -49,8 +49,8 @@ export const GET = async () => {
 //create new todo
 export const POST = async (req: NextRequest) => {
   try {
-    const reqBody = await req.json();
-    createTodos(reqBody)
+    const reqBody = await req.json(); 
+    await createTodos(reqBody)
     return NextResponse.json({
       message: "todo added",
       data: reqBody

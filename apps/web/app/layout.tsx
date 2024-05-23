@@ -7,6 +7,7 @@ import Slider from "./components/Slider";
 import { Button } from "./components/ui/button";
 import { AlertButton, SliderToggleBtn } from "./components/buttons/Buttons";
 import Header from "./components/Header";
+import { Toaster } from "./components/ui/sonner"
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -28,6 +29,7 @@ export default function RootLayout({
           <StoreProvider>
             <Header/>
             {children}
+            <Toaster/>
           </StoreProvider>
         </Providers>
       </body>

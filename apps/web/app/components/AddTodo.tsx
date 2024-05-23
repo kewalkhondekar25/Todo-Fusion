@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import {
   Card,
@@ -20,6 +21,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Input } from './ui/input2'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 
 const addTodoSchema = yup.object({
@@ -34,6 +36,7 @@ const AddTodo = () => {
   const payload = session.data?.user?.email;
   const {todoCount} = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch();
+
   const formik = useFormik({
     initialValues: {
       todo: "",
@@ -44,16 +47,22 @@ const AddTodo = () => {
       try {
         const response = axios.post("/api/todaystodos", value);
         const data = (await response).data;
-        alert(JSON.stringify(value));
+        const newTodo = data.data.todo;
+        console.log("new todo: ", newTodo);
+        // alert(JSON.stringify(value));
+        toast("📋 Todo added! Your productivity is on fire!", {
+          description: `New Todo: ${newTodo}`
+        });
         resetForm();
-        dispatch(setAddedTodoStatus(todoCount + 1));
-        dispatch(openAddTodo())
+        dispatch(setAddedTodoStatus(`${newTodo}`));
+        dispatch(openAddTodo());
       } catch (error) {
         console.log(error);
       }
     }
   })
   const [date, setDate] = useState<Date | undefined>(new Date());
+  
   return (
     <section className='absolute top-20 right-20'>
       <form onSubmit={(e) => {

@@ -4,8 +4,9 @@ import { getAllTodos } from '@repo/db'
 import { TodaysTodoCheckBox } from '../../checkboxes/CheckBoxes';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks';
-import {setTodos, setAddedTodoStatus} from "../../../../lib/store/features/todos/todoSlice"
+import {setAddedTodoStatus, setTodos} from "../../../../lib/store/features/todos/todoSlice"
 import { Checkbox } from "../../ui/checkbox"
+import { toast } from 'sonner';
 
 type AllTodosType = {
   id: string;
@@ -17,7 +18,7 @@ type AllTodosType = {
 }
 const TodaysTodos = () => {
 
-  const {todos, todoCount} = useAppSelector(state => state.todo)
+  const {todos, todoCount} = useAppSelector(state => state.todo);
   const dispatch = useAppDispatch();  
 
   const getTodaysTodo = async () => {
@@ -36,7 +37,10 @@ const TodaysTodos = () => {
       //post id as payload
       const response = await axios.post("/api/iscomplete", {id: todoId});
       const data = response.data;
-      dispatch(setAddedTodoStatus(todoCount + 1))
+      dispatch(setAddedTodoStatus(`${todoId}`));
+      toast("You're on a roll! Another todo checked off your list.🎯", {
+        description: ""
+      })
       console.log(data);
     } catch (error: any) {
       console.log(error.message);
@@ -44,6 +48,7 @@ const TodaysTodos = () => {
   }
 
   useEffect(() => {
+    console.log(todoCount)
     getTodaysTodo()
   }, [todoCount])
 
@@ -59,7 +64,7 @@ const TodaysTodos = () => {
                 disabled={item.isCompleted}
               />
               
-              <div className={`${item.isCompleted ? 'line-through' : ''}`}>
+              <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through' : ''}`}>
                 {item.todo}
               </div>
             </div>
