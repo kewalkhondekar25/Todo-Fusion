@@ -105,3 +105,25 @@ export const updateCompleteTodo = async (todoId: string) => {
     console.log(error);
   }
 }
+
+interface UpdateParamsType {
+  id: string,
+  todo: string
+}
+
+export const updateTodo = async (updatePayload: UpdateParamsType) => {
+  try {
+    const {id, todo} = updatePayload
+    const updatedTodo = await prisma.todos.update({
+      data: {
+        todo: todo
+      },
+      where: {
+        id : id
+      }
+    });
+    return updatedTodo;
+  } catch (error) {
+    console.log(error);
+  }
+}
