@@ -1,13 +1,14 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getAllTodos } from '@repo/db'
 import { TodaysTodoCheckBox } from '../../checkboxes/CheckBoxes';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks';
-import {setAddedTodoStatus, setTodos} from "../../../../lib/store/features/todos/todoSlice"
+import {ToggleEditTodo, setAddedTodoStatus, setTodos, setEditTodo} from "../../../../lib/store/features/todos/todoSlice"
 import { Checkbox } from "../../ui/checkbox"
 import { toast } from 'sonner';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import EditTodo from '../EditTodo/EditTodo';
 
 type AllTodosType = {
   id: string;
@@ -19,7 +20,13 @@ type AllTodosType = {
 }
 const TodaysTodos = () => {
 
-  const {todos, todoCount} = useAppSelector(state => state.todo);
+  const [editPayload, setEditPayload] = useState({
+    id: "",
+    todo: ""
+  });
+  console.log(editPayload);
+  
+  const {todos, todoCount, isEditTodoOpen} = useAppSelector(state => state.todo);
   const dispatch = useAppDispatch();  
 
   const getTodaysTodo = async () => {
@@ -46,6 +53,10 @@ const TodaysTodos = () => {
     } catch (error: any) {
       console.log(error.message);
     }
+  };
+
+  const handleEditPayload = (id: string, todo: string) => {
+    dispatch(setEditTodo({id, todo}));
   }
 
   useEffect(() => {
@@ -58,20 +69,21 @@ const TodaysTodos = () => {
       {
         todos.map((item, i) => {
           return(
-            <div key={i} className='relative flex place-items-center gap-2'>
+            <div key={i} className='flex place-items-center gap-2'>
               <Checkbox 
                 onCheckedChange={() => handleCompleteTodo(item.id)}
                 checked={item.isCompleted}
                 disabled={item.isCompleted}
               />
-              <div className='flex-1 flex items-center group'>
+              <div className='relative flex-1 flex items-center group'>
                 <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through' : ''}flex-1`}>
                   {item.todo}
                 </div>
                 <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
                   <Pencil1Icon 
-                    className='h-5 w-5'
-                    onClick={() => alert("pencil")}/>
+                    className='relative h-5 w-5'
+                    onClick={() => {handleEditPayload(item.id, item.todo); dispatch(ToggleEditTodo())}}
+                  />
                   <TrashIcon className='ms-2 h-5 w-5'/>
                 </div>
               </div>
@@ -79,6 +91,7 @@ const TodaysTodos = () => {
           )
         })
       }
+      {isEditTodoOpen && <EditTodo/>}
     </div>
   )
 }

@@ -55,6 +55,8 @@ const Slider = () => {
               }
             </div>
           </nav>
+          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/">Home</Link>
         </div>
         <SliderToggleBtn/>
       </div>

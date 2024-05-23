@@ -10,18 +10,27 @@ type AllTodosType = {
   usersId: string;
 }
 
+type EditPayLoadType = {
+  id: string,
+  todo: string
+}
+
 type TodoType = {
   isAddTodoOpen: boolean;
   todos: AllTodosType[];
   todoCount: string,
-  isTodoComplete: boolean 
+  isTodoComplete: boolean,
+  isEditTodoOpen: boolean,
+  editPayload: EditPayLoadType | null
 };
 
 const initialState: TodoType = {
   isAddTodoOpen: false,
   todos: [],
   todoCount: "added",
-  isTodoComplete: false
+  isTodoComplete: false,
+  isEditTodoOpen: false,
+  editPayload: null
 };
 
 export const todoSlice = createSlice({
@@ -39,8 +48,23 @@ export const todoSlice = createSlice({
     },
     setTodoComplete: (state, action: PayloadAction<boolean>) => {
       state.isTodoComplete = !state.isTodoComplete
+    },
+    ToggleEditTodo: (state) => {
+      state.isEditTodoOpen = !state.isEditTodoOpen
+    },
+    setEditTodo: (state, action: PayloadAction<EditPayLoadType | null>) => {
+      state.editPayload = action.payload
     }
   }
 });
-export const { openAddTodo, setTodos, setAddedTodoStatus, setTodoComplete } = todoSlice.actions;
+export const { 
+  openAddTodo,
+  setTodos, 
+  setAddedTodoStatus, 
+  setTodoComplete,
+  ToggleEditTodo,
+  setEditTodo
+  
+} = todoSlice.actions;
+
 export default todoSlice.reducer;
