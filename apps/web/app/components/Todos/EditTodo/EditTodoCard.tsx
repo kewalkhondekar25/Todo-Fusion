@@ -16,6 +16,7 @@ import { ToggleEditTodo } from '../../../../lib/store/features/todos/todoSlice'
 const EditTodoCard = () => {
   const dispatch = useAppDispatch();
   return (
+    <form >
     <Card className='bg-[#383838] border-[#525252]'>
       <CardHeader>
         <CardTitle>Edit Todo</CardTitle>
@@ -30,6 +31,7 @@ const EditTodoCard = () => {
           <Button>Save</Button>
       </CardFooter>
     </Card>
+    </form>
   )
 }
 

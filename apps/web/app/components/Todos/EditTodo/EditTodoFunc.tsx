@@ -5,11 +5,13 @@ import PrioritySelect from '../../priority/PrioritySelect'
 import { TimePickerDemo } from '../../TimePicker'
 import { Button } from '../../ui/button'
 import { ClockIcon } from "@radix-ui/react-icons";
+import { useAppSelector } from '../../../../lib/store/hooks/hooks'
 
 
 const EditTodoFunc = () => {
   
   // const [date, setDate] = useState<Date | undefined>(new Date());
+  const {editPayload} = useAppSelector(state => state.todo);
   return (
     <div>
       <div className='flex flex-col gap-2'>
@@ -17,7 +19,8 @@ const EditTodoFunc = () => {
           className='border-white '
           placeholder='Edit your todo'
           name='edittodo'
-          type='text'/>
+          type='text'
+          defaultValue={`${editPayload?.todo}`}/>
         <div className='flex place-items-center gap-1'>
           <div>
             <PrioritySelect/>
