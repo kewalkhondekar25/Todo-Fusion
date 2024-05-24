@@ -22,6 +22,7 @@ import * as yup from "yup";
 import { Input } from './ui/input2'
 import axios from 'axios'
 import { toast } from 'sonner'
+import TimePicker from './TimePicker/TimePicker'
 
 
 const addTodoSchema = yup.object({
@@ -93,7 +94,7 @@ const AddTodo = () => {
                   <PrioritySelect />
                 </div>
                 <div>
-                  <TimePickerDemo date={date} setDate={setDate} />
+                  <TimePicker/>
                 </div>
               </div>
             </div>

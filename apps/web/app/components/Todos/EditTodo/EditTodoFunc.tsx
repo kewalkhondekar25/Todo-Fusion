@@ -6,6 +6,8 @@ import { TimePickerDemo } from '../../TimePicker'
 import { Button } from '../../ui/button'
 import { ClockIcon } from "@radix-ui/react-icons";
 import { useAppSelector } from '../../../../lib/store/hooks/hooks'
+import TimePicker from '../../TimePicker/TimePicker'
+import { Label } from '../../ui/label2'
 
 
 const EditTodoFunc = () => {
@@ -15,26 +17,20 @@ const EditTodoFunc = () => {
   return (
     <div>
       <div className='flex flex-col gap-2'>
+        <Label>Enter your </Label>
         <Input
           className='border-white '
           placeholder='Edit your todo'
           name='edittodo'
           type='text'
-          defaultValue={`${editPayload?.todo}`}/>
+          defaultValue={`${editPayload?.todo}`}
+        />
         <div className='flex place-items-center gap-1'>
           <div>
             <PrioritySelect/>
           </div>
-          <Button 
-            className='flex justify-between gap-1'
-            onClick={() => alert("remind me")}>
-            <div>
-              <span>Reminder </span>
-            </div>
-            <div>
-              <ClockIcon/>
-            </div>
-          </Button>
+          <TimePicker/>
+          <ClockIcon/>
         </div> 
       </div>
     </div>
