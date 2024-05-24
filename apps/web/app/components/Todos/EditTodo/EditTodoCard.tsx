@@ -34,7 +34,7 @@ const EditTodoCard = () => {
     <Card className='bg-[#383838] border-[#525252]'>
       <CardHeader>
         <CardTitle>Edit Todo</CardTitle>
-        <CardDescription className='text-[#D6D6D6]'>Edit Your Today's Todo</CardDescription>
+        <CardDescription className='text-[#D6D6D6]'>Sharpen your focus by editing your Todo📝</CardDescription>
       </CardHeader>
       <CardContent>
         <EditTodoFunc/>

@@ -11,13 +11,13 @@ import { Label } from '../../ui/label2'
 
 
 const EditTodoFunc = () => {
-  
+
   // const [date, setDate] = useState<Date | undefined>(new Date());
-  const {editPayload} = useAppSelector(state => state.todo);
+  const { editPayload } = useAppSelector(state => state.todo);
   return (
     <div>
       <div className='flex flex-col gap-2'>
-        <Label>Enter your </Label>
+        <Label>Enter Your Edited Todo</Label>
         <Input
           className='border-white '
           placeholder='Edit your todo'
@@ -25,13 +25,21 @@ const EditTodoFunc = () => {
           type='text'
           defaultValue={`${editPayload?.todo}`}
         />
-        <div className='flex place-items-center gap-1'>
+        <div className='flex justify-center place-items-center gap-1'>
           <div>
-            <PrioritySelect/>
+            <Label>Edit Priority</Label>
+            <PrioritySelect />
           </div>
-          <TimePicker/>
-          <ClockIcon/>
-        </div> 
+          <div>
+            <Label className='flex gap-1 mt-1'> 
+              <div>Reminder</div>
+              <ClockIcon />
+            </Label>
+            <div className='mt-1'>
+            <TimePicker />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
