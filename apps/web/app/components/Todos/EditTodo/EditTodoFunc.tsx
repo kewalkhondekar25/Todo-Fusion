@@ -19,6 +19,7 @@ const EditTodoFunc = () => {
       <div className='flex flex-col gap-2'>
         <Label>Enter Your Edited Todo</Label>
         <Input
+          autoFocus
           className='border-white '
           placeholder='Edit your todo'
           name='edittodo'

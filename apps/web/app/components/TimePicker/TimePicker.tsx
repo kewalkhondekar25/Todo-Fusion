@@ -25,7 +25,7 @@ const TimePicker = () => {
     <div className=' text-[#F8FAFC] group'>
       <div className='flex gap-1'>
         <div>
-          <Select>
+          <Select name='hours'>
             <SelectTrigger className="border-white">
               <SelectValue placeholder="00" />
             </SelectTrigger>
@@ -33,7 +33,7 @@ const TimePicker = () => {
               {
                 hours.map((item, i) => {
                   return (
-                    <SelectItem className='' key={i} value={`${item}`}>{item}</SelectItem>
+                    <SelectItem key={i} value={`${item}`}>{item}</SelectItem>
                   )
                 })
               }
@@ -41,7 +41,7 @@ const TimePicker = () => {
           </Select>
         </div>
         <div>
-          <Select>
+          <Select name='minutes'>
             <SelectTrigger className="border-white">
               <SelectValue placeholder="00" />
             </SelectTrigger>
