@@ -34,15 +34,16 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import { format } from 'date-fns';
 import { cn } from '../../lib/utils'
-import { CalendarIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { CalendarIcon, ClockIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { Label } from './ui/label2'
 
 
 const addTodoSchema = yup.object({
-  todo: yup.string().required("Whoops! Looks like New Todo is Required"),
-  date: yup.date().required("Whoops! Looks like Date is Required").nullable(),
-  priority: yup.string().required("Whoops! Looks like New Todo is Required"),
-  hours: yup.string().required("Whoops! Looks like Hours is Required"),
-  minutes: yup.string().required("Whoops! Looks like Minutes is Required"),
+  todo: yup.string().required("New Todo is Required"),
+  date: yup.date().required("Date is Required").nullable(),
+  priority: yup.string().required("Priority is Required"),
+  hours: yup.string().required("Hours is Required"),
+  minutes: yup.string().required("Minutes is Required"),
 })
 
 
@@ -50,7 +51,6 @@ const AddTodo = () => {
 
   const session = useSession();
   const payload = session.data?.user?.email;
-  const { todoCount } = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch();
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const hours = [];
@@ -81,7 +81,7 @@ const AddTodo = () => {
         // const newTodo = data.data.todo;
         // console.log("new todo: ", newTodo);
         const newTodo = value;
-        console.log(value.date);
+        console.log(value);
         // alert(JSON.stringify(value));
         toast("📋 Todo added! Your productivity is on fire!", {
           description: `New Todo: ${newTodo}`
@@ -119,8 +119,9 @@ const AddTodo = () => {
               {formik.touched.todo && formik.errors.todo ? (
                 <div className="text-xs text-red-500">{formik.errors.todo}</div>
               ) : null}
-              <div className='flex justify-between place-items-center'>
-                <div className='mt-5'>
+              <div className='flex justify-between place-items-center gap-1'>
+                <div>
+                  <Label>Select Priority</Label>
                   <Select
                     name='priority'
                     onValueChange={(value) => formik.setFieldValue('priority', value)}>
@@ -134,10 +135,15 @@ const AddTodo = () => {
                       <SelectItem value="priority3">Priority 3</SelectItem>
                     </SelectContent>
                   </Select>
+                  {formik.touched.todo && formik.errors.priority ? (
+                <div className="text-xs text-red-500">{formik.errors.priority}</div>
+              ) : null}
                 </div>
                 <div>
+                  <Label>Set Due Date</Label>
                   <Popover>
-                    <PopoverTrigger asChild>
+                    <PopoverTrigger asChild
+                    className='bg-[#383838] border-white'>
                       <Button
                         variant={"outline"}
                         className={cn(
@@ -148,9 +154,9 @@ const AddTodo = () => {
                         {formik.values.date ? (
                           format(new Date(formik.values.date), "PPP")
                         ) : (
-                          <span>Pick a date</span>
+                          <span className='text-white'>Pick a date</span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-white" />
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -162,43 +168,58 @@ const AddTodo = () => {
                       />
                     </PopoverContent>
                   </Popover>
+                  {formik.touched.date && formik.errors.date ? (
+                <div className="text-xs text-red-500">{formik.errors.date}</div>
+              ) : null}
                 </div>
-                <div className='flex'>
-                  <div>
-                    <Select 
-                    name='hours'
-                    onValueChange={(value) => formik.setFieldValue('hours', value)}>
-                      <SelectTrigger className="border-white">
-                        <SelectValue placeholder="00" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#525252]">
-                        {
-                          hours.map((item, i) => {
-                            return (
-                              <SelectItem key={i} value={`${item}`}>{item}</SelectItem>
-                            )
-                          })
-                        }
-                      </SelectContent>
-                    </Select>
+                <div className='flex flex-col gap-1'>
+                  <div className='flex gap-2 mt-1'>
+                    <Label>Remind Me</Label>
+                    <ClockIcon/>
                   </div>
-                  <div>
-                    <Select 
-                    name='minutes' 
-                    onValueChange={(value) => formik.setFieldValue('minutes', value)}>
-                      <SelectTrigger className="border-white">
-                        <SelectValue placeholder="00" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#525252]">
-                        {
-                          minutes.map((item, i) => {
-                            return (
-                              <SelectItem key={i} value={`${item}`}>{item}</SelectItem>
-                            )
-                          })
-                        }
-                      </SelectContent>
-                    </Select>
+                  <div className='flex'>
+                    <div>
+                      <Select
+                        name='hours'
+                        onValueChange={(value) => formik.setFieldValue('hours', value)}>
+                        <SelectTrigger className="border-white">
+                          <SelectValue placeholder="00" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#525252]">
+                          {
+                            hours.map((item, i) => {
+                              return (
+                                <SelectItem key={i} value={`${item}`}>{item}</SelectItem>
+                              )
+                            })
+                          }
+                        </SelectContent>
+                      </Select>
+                      {formik.touched.hours && formik.errors.hours ? (
+                <div className="text-xs text-red-500">{formik.errors.hours}</div>
+              ) : null}
+                    </div>
+                    <div>
+                      <Select
+                        name='minutes'
+                        onValueChange={(value) => formik.setFieldValue('minutes', value)}>
+                        <SelectTrigger className="border-white">
+                          <SelectValue placeholder="00" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#525252]">
+                          {
+                            minutes.map((item, i) => {
+                              return (
+                                <SelectItem key={i} value={`${item}`}>{item}</SelectItem>
+                              )
+                            })
+                          }
+                        </SelectContent>
+                      </Select>
+                      {formik.touched.minutes && formik.errors.minutes ? (
+                <div className="text-xs text-red-500">{formik.errors.minutes}</div>
+              ) : null}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -208,9 +229,6 @@ const AddTodo = () => {
             <AddCloseTodoBtn>
               <span>Close</span>
             </AddCloseTodoBtn>
-            {/* <AddCloseTodoBtn>
-            <span>Add Todo</span>
-          </AddCloseTodoBtn> */}
             <Button>Add Todo</Button>
           </CardFooter>
         </Card>
