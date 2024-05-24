@@ -6,10 +6,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
-import { Label } from '../ui/label2';
+import { useAppDispatch, useAppSelector } from "../../../lib/store/hooks/hooks"
+import { setEditValues } from '../../../lib/store/features/todos/todoSlice'
 
-
-const TimePicker = () => {
+const EditTodoTimePicker = () => {
+  
+  const {editValues} = useAppSelector(state => state.todo)
+  const dispatch = useAppDispatch()
+  
   const hours = [];
   for (let i = 0; i < 24; i++) {
     hours[i] = String(i).padStart(2, '0');
@@ -25,7 +29,7 @@ const TimePicker = () => {
     <div className=' text-[#F8FAFC] group'>
       <div className='flex gap-1'>
         <div>
-          <Select name='hours'>
+          <Select name='hours' onValueChange={e => dispatch(setEditValues({...editValues, hours: e}))}>
             <SelectTrigger className="border-white">
               <SelectValue placeholder="00" />
             </SelectTrigger>
@@ -41,7 +45,7 @@ const TimePicker = () => {
           </Select>
         </div>
         <div>
-          <Select name='minutes'>
+          <Select name='minutes' onValueChange={e => dispatch(setEditValues({...editValues, minutes: e}))}>
             <SelectTrigger className="border-white">
               <SelectValue placeholder="00" />
             </SelectTrigger>
@@ -62,4 +66,4 @@ const TimePicker = () => {
   )
 }
 
-export default TimePicker
+export default EditTodoTimePicker

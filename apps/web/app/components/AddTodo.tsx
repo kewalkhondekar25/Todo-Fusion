@@ -12,7 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../lib/store/hooks/hooks"
 import { openAddTodo,setAddedTodoStatus } from "../../lib/store/features/todos/todoSlice"
 
-import PrioritySelect from './priority/PrioritySelect'
+import PrioritySelect from './priority/EditTodoPrioritySelect'
 import { TimePickerDemo } from './TimePicker'
 import { Label } from './ui/label2'
 import { Button } from './ui/button'
@@ -22,7 +22,7 @@ import * as yup from "yup";
 import { Input } from './ui/input2'
 import axios from 'axios'
 import { toast } from 'sonner'
-import TimePicker from './TimePicker/TimePicker'
+import TimePicker from './TimePicker/EditTodoTimePicker'
 
 
 const addTodoSchema = yup.object({
@@ -91,7 +91,7 @@ const AddTodo = () => {
               ) : null}
               <div className='flex justify-between place-items-center'>
                 <div className='mt-5'>
-                  <PrioritySelect />
+                  <PrioritySelect  />
                 </div>
                 <div>
                   <TimePicker/>

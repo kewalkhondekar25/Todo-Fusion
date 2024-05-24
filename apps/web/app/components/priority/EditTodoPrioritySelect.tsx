@@ -10,10 +10,14 @@ import {
   SelectValue,
 } from "../ui/select"
 import {ExclamationTriangleIcon} from "@radix-ui/react-icons"
+import { setEditValues } from "../../../lib/store/features/todos/todoSlice"
+import { useAppDispatch, useAppSelector } from "../../../lib/store/hooks/hooks"
 
-const PrioritySelect = () => {
+const EditTodoPrioritySelect = () => {
+  const {editValues} = useAppSelector(state => state.todo)
+  const dispatch = useAppDispatch()
   return (
-    <Select name="priority">
+    <Select name="priority" onValueChange={e => dispatch(setEditValues({...editValues, priority: e}))}>
       <SelectTrigger className=" border-white gap-2">
         <ExclamationTriangleIcon/>
         <SelectValue placeholder="Priority" />
@@ -28,4 +32,4 @@ const PrioritySelect = () => {
   )
 }
 
-export default PrioritySelect
+export default EditTodoPrioritySelect

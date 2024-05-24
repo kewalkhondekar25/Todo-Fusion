@@ -14,14 +14,20 @@ type EditPayLoadType = {
   id: string,
   todo: string
 }
-
+type EditTodoValType = {
+  todo?: string,
+  priority?: string,
+  hours?: string,
+  minutes?: string
+}
 type TodoType = {
   isAddTodoOpen: boolean;
   todos: AllTodosType[];
   todoCount: string,
   isTodoComplete: boolean,
   isEditTodoOpen: boolean,
-  editPayload: EditPayLoadType | null
+  editPayload: EditPayLoadType | null,
+  editValues: EditTodoValType | null
 };
 
 const initialState: TodoType = {
@@ -30,7 +36,8 @@ const initialState: TodoType = {
   todoCount: "added",
   isTodoComplete: false,
   isEditTodoOpen: false,
-  editPayload: null
+  editPayload: null,
+  editValues: null
 };
 
 export const todoSlice = createSlice({
@@ -47,13 +54,16 @@ export const todoSlice = createSlice({
       state.todoCount = action.payload
     },
     setTodoComplete: (state, action: PayloadAction<boolean>) => {
-      state.isTodoComplete = !state.isTodoComplete
+      state.isTodoComplete = !state.isTodoComplete;
     },
     ToggleEditTodo: (state) => {
-      state.isEditTodoOpen = !state.isEditTodoOpen
+      state.isEditTodoOpen = !state.isEditTodoOpen;
     },
     setEditTodo: (state, action: PayloadAction<EditPayLoadType | null>) => {
-      state.editPayload = action.payload
+      state.editPayload = action.payload;
+    },
+    setEditValues: (state, action: PayloadAction<EditTodoValType>) => {
+      state.editValues = action.payload;
     }
   }
 });
@@ -63,7 +73,8 @@ export const {
   setAddedTodoStatus, 
   setTodoComplete,
   ToggleEditTodo,
-  setEditTodo
+  setEditTodo,
+  setEditValues
   
 } = todoSlice.actions;
 
