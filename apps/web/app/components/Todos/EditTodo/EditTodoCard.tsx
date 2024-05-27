@@ -39,9 +39,10 @@ const EditTodoCard = () => {
           <EditTodoFunc />
         </CardContent>
         <CardFooter className='flex justify-between'>
+          <Button>Cancel</Button>
           <Button
-            onClick={handleEditTodo}>Cancel</Button>
-          <Button>Save</Button>
+            onClick={handleEditTodo}
+            >Save</Button>
         </CardFooter>
       </Card>
   )
