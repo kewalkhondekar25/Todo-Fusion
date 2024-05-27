@@ -17,11 +17,11 @@ import axios from 'axios'
 const EditTodoCard = () => {
 
   const dispatch = useAppDispatch();
-  const { editPayload } = useAppSelector(state => state.todo);
+  const { editPayload, editValues } = useAppSelector(state => state.todo);
 
   const handleEditTodo = async () => {
     try {
-      const response = await axios.post("/api/updatetodo", editPayload);
+      const response = await axios.post("/api/updatetodo", editValues);
       const result = response.data;
       dispatch(ToggleEditTodo())
       console.log(result);

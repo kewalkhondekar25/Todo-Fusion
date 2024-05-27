@@ -23,6 +23,7 @@ type EditPayLoadType = {
   minutes: string
 }
 type EditTodoValType = {
+  id?: string
   todo?: string,
   priority?: string,
   hours?: string,

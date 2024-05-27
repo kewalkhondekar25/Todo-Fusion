@@ -4,7 +4,7 @@ import { getAllTodos } from '@repo/db'
 import { TodaysTodoCheckBox } from '../../checkboxes/CheckBoxes';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks';
-import {ToggleEditTodo, setAddedTodoStatus, setTodos, setEditTodo} from "../../../../lib/store/features/todos/todoSlice"
+import {ToggleEditTodo, setAddedTodoStatus, setTodos, setEditTodo, setEditValues} from "../../../../lib/store/features/todos/todoSlice"
 import { Checkbox } from "../../ui/checkbox"
 import { toast } from 'sonner';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
@@ -31,7 +31,7 @@ const TodaysTodos = () => {
   });
   console.log(editPayload);
   
-  const {todos, todoCount, isEditTodoOpen} = useAppSelector(state => state.todo);
+  const {todos, todoCount, isEditTodoOpen, editValues} = useAppSelector(state => state.todo);
   const dispatch = useAppDispatch();  
 
   const getTodaysTodo = async () => {
@@ -62,6 +62,7 @@ const TodaysTodos = () => {
 
   const handleEditPayload = (id: string, todo: string, priority: string, hours: string, minutes: string) => {
     dispatch(setEditTodo({id, todo, priority, hours, minutes}));
+    dispatch(setEditValues({...editValues, id}))
   }
 
   useEffect(() => {
@@ -81,6 +82,7 @@ const TodaysTodos = () => {
                 disabled={item.isCompleted}
               />
               <div className='relative flex-1 flex items-center group'>
+                {/* {item.isCompleted ? null : } */}
                 <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through' : ''}flex-1`}>
                   {item.todo}
                 </div>

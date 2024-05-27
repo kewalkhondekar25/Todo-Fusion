@@ -117,15 +117,21 @@ export const updateCompleteTodo = async (todoId: string) => {
 
 interface UpdateParamsType {
   id: string,
-  todo: string
+  todo: string,
+  priority: string,
+  hours: string,
+  minutes: string
 }
 
 export const updateTodo = async (updatePayload: UpdateParamsType) => {
   try {
-    const {id, todo} = updatePayload
+    const {id, todo, priority, hours, minutes} = updatePayload
     const updatedTodo = await prisma.todos.update({
       data: {
-        todo: todo
+        todo: todo,
+        priority: priority,
+        hours: hours,
+        minutes: minutes
       },
       where: {
         id : id
