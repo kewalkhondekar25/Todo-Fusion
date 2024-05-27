@@ -82,17 +82,17 @@ const TodaysTodos = () => {
                 disabled={item.isCompleted}
               />
               <div className='relative flex-1 flex items-center group'>
-                {/* {item.isCompleted ? null : } */}
-                <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through' : ''}flex-1`}>
+                
+                <div className={`hover:cursor-pointer ${item.isCompleted ? 'line-through ' : ''}flex-1`}>
                   {item.todo}
                 </div>
-                <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
+                {item.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
                   <Pencil1Icon 
                     className='relative h-5 w-5'
                     onClick={() => {handleEditPayload(item.id, item.todo, item.priority ?? "", item.hours ?? "", item.minutes ?? ""); dispatch(ToggleEditTodo())}}
                   />
                   <TrashIcon className='ms-2 h-5 w-5'/>
-                </div>
+                </div>}
               </div>
             </div>
           )
