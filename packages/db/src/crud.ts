@@ -45,11 +45,12 @@ export const createUser = async (params: InputTypes) => {
 //todos crud
 
 //all todos of single user
-export const getUserTodos = async () => {
-  //send email to get id
-  //use id to connect to user
-}
+// export const getUserTodos = async () => {
+//   //send email to get id
+//   //use id to connect to user
+// }
 
+//READ
 export const getAllTodos = async (userId: string) => {
   try {
     return await prisma.todos.findMany({
@@ -65,7 +66,7 @@ export const getAllTodos = async (userId: string) => {
   }
 };
 
-
+//CREATE
 interface ReqBodyType {
   todo: string;
   priority?: string;
@@ -78,7 +79,17 @@ interface ReqBodyType {
 export const createTodos = async (reqBody: ReqBodyType) => {
   try {
     const { todo, priority, minutes, hours, date,  payload } = reqBody;
-    const specificUser = await getSingleUser(payload)
+    // const TODAY = new Date();
+    // const DATE = date.getDate();
+    // const MONTH = date.getMonth();
+    // const YEAR = date.getFullYear();
+    // if(TODAY.getDay() && TODAY.getMonth() && TODAY.getFullYear() === DATE && MONTH && YEAR){
+    //   console.log("today");
+    // }else if(TODAY.getDay() && TODAY.getMonth() && TODAY.getFullYear() < DATE && MONTH && YEAR){
+    //   console.log("tomorrow");
+    // }else{
+    //   console.log("yesterday");
+    // }
     const todos = await prisma.todos.create({
       data: {
         todo: todo,
@@ -90,7 +101,7 @@ export const createTodos = async (reqBody: ReqBodyType) => {
           connect: { email: payload }
         }
       }
-    })
+    });
     return todos
   } catch (error) {
     return error

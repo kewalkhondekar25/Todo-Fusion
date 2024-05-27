@@ -91,8 +91,8 @@ const AddTodo = () => {
         resetForm();
         dispatch(setAddedTodoStatus(`${newTodo}`));
         dispatch(openAddTodo());
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.log(error.message);
       }
     }
   })
