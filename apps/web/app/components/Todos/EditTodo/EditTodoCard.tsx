@@ -10,7 +10,7 @@ import {
 import EditTodoFunc from './EditTodoFunc'
 import { Button } from '../../ui/button'
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
-import { ToggleEditTodo } from '../../../../lib/store/features/todos/todoSlice'
+import { ToggleEditTodo, setAddedTodoStatus } from '../../../../lib/store/features/todos/todoSlice'
 import axios from 'axios'
 
 
@@ -23,6 +23,8 @@ const EditTodoCard = () => {
     try {
       const response = await axios.post("/api/updatetodo", editValues);
       const result = response.data;
+      // console.log(result.data.todo);
+      dispatch(setAddedTodoStatus(`${result.data.todo}`));
       dispatch(ToggleEditTodo())
       console.log(result);
     } catch (error) {
