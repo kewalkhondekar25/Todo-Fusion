@@ -14,10 +14,12 @@ import { setEditValues } from "../../../lib/store/features/todos/todoSlice"
 import { useAppDispatch, useAppSelector } from "../../../lib/store/hooks/hooks"
 
 const EditTodoPrioritySelect = () => {
-  const {editValues} = useAppSelector(state => state.todo)
+  const {editValues, editPayload} = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch()
   return (
-    <Select name="priority" onValueChange={e => dispatch(setEditValues({...editValues, priority: e}))}>
+    <Select name="priority" 
+      onValueChange={e => dispatch(setEditValues({...editValues, priority: e}))}
+      defaultValue={`${editPayload?.priority}`}>
       <SelectTrigger className=" border-white gap-2">
         <ExclamationTriangleIcon/>
         <SelectValue placeholder="Priority" />

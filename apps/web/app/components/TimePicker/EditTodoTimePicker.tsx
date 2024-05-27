@@ -11,7 +11,7 @@ import { setEditValues } from '../../../lib/store/features/todos/todoSlice'
 
 const EditTodoTimePicker = () => {
   
-  const {editValues} = useAppSelector(state => state.todo)
+  const {editValues, editPayload} = useAppSelector(state => state.todo)
   const dispatch = useAppDispatch()
   
   const hours = [];
@@ -29,7 +29,9 @@ const EditTodoTimePicker = () => {
     <div className=' text-[#F8FAFC] group'>
       <div className='flex gap-1'>
         <div>
-          <Select name='hours' onValueChange={e => dispatch(setEditValues({...editValues, hours: e}))}>
+          <Select name='hours' 
+          onValueChange={e => dispatch(setEditValues({...editValues, hours: e}))}
+          defaultValue={`${editPayload?.hours}`}>
             <SelectTrigger className="border-white">
               <SelectValue placeholder="00" />
             </SelectTrigger>
@@ -45,7 +47,9 @@ const EditTodoTimePicker = () => {
           </Select>
         </div>
         <div>
-          <Select name='minutes' onValueChange={e => dispatch(setEditValues({...editValues, minutes: e}))}>
+          <Select name='minutes' 
+          onValueChange={e => dispatch(setEditValues({...editValues, minutes: e}))}
+          defaultValue={`${editPayload?.minutes}`}>
             <SelectTrigger className="border-white">
               <SelectValue placeholder="00" />
             </SelectTrigger>

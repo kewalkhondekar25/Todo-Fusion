@@ -17,6 +17,11 @@ type AllTodosType = {
   createdAt: Date;
   updatedAt: Date;
   usersId: string;
+  priority: string;
+  date: Date;
+  hours: string;
+  minutes: string;
+  isUpcoming: boolean;
 }
 const TodaysTodos = () => {
 
@@ -55,8 +60,8 @@ const TodaysTodos = () => {
     }
   };
 
-  const handleEditPayload = (id: string, todo: string) => {
-    dispatch(setEditTodo({id, todo}));
+  const handleEditPayload = (id: string, todo: string, priority: string, hours: string, minutes: string) => {
+    dispatch(setEditTodo({id, todo, priority, hours, minutes}));
   }
 
   useEffect(() => {
@@ -82,7 +87,7 @@ const TodaysTodos = () => {
                 <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
                   <Pencil1Icon 
                     className='relative h-5 w-5'
-                    onClick={() => {handleEditPayload(item.id, item.todo); dispatch(ToggleEditTodo())}}
+                    onClick={() => {handleEditPayload(item.id, item.todo, item.priority ?? "", item.hours ?? "", item.minutes ?? ""); dispatch(ToggleEditTodo())}}
                   />
                   <TrashIcon className='ms-2 h-5 w-5'/>
                 </div>

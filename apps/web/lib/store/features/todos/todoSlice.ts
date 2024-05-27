@@ -8,11 +8,19 @@ type AllTodosType = {
   createdAt: Date;
   updatedAt: Date;
   usersId: string;
+  priority?: string;
+  minutes?: string;
+  hours?: string;
+  date?: Date;
+  isUpcoming?: boolean;
 }
 
 type EditPayLoadType = {
   id: string,
-  todo: string
+  todo: string,
+  priority: string,
+  hours: string,
+  minutes: string
 }
 type EditTodoValType = {
   todo?: string,
