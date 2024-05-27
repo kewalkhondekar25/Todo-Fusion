@@ -50,10 +50,10 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json(); 
-    await createTodos(reqBody)
+    const newTodo = await createTodos(reqBody)
     return NextResponse.json({
       message: "todo added",
-      data: reqBody
+      data: newTodo
     },
       { status: 201 })
   } catch (error) {

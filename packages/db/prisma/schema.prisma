@@ -27,11 +27,16 @@ model Users {
 }
 
 model Todos {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   todo        String
-  isCompleted Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        Users    @relation(fields: [usersId], references: [id])
+  isCompleted Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        Users     @relation(fields: [usersId], references: [id])
   usersId     String
+  priority    String?
+  date        DateTime?
+  hours       String?
+  minutes     String?
+  isUpcoming  Boolean?  @default(false)
 }

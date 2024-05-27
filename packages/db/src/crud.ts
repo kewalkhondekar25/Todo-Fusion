@@ -67,16 +67,25 @@ export const getAllTodos = async (userId: string) => {
 
 
 interface ReqBodyType {
-  todo: string,
-  payload: string
+  todo: string;
+  priority?: string;
+  minutes?: string;
+  hours?: string;
+  date?: Date;
+  isUpcoming?: boolean;
+  payload: string;
 }
 export const createTodos = async (reqBody: ReqBodyType) => {
-  const { todo, payload } = reqBody;
   try {
+    const { todo, priority, minutes, hours, date,  payload } = reqBody;
     const specificUser = await getSingleUser(payload)
     const todos = await prisma.todos.create({
       data: {
         todo: todo,
+        priority: priority,
+        date: date,
+        hours: hours,
+        minutes: minutes,
         user: {
           connect: { email: payload }
         }

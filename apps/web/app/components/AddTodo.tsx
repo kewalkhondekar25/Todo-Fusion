@@ -76,11 +76,13 @@ const AddTodo = () => {
     validationSchema: addTodoSchema,
     onSubmit: async (value, { resetForm }) => {
       try {
-        // const response = axios.post("/api/todaystodos", value);
-        // const data = (await response).data;
-        // const newTodo = data.data.todo;
-        // console.log("new todo: ", newTodo);
-        const newTodo = value;
+        const response = await axios.post("/api/todaystodos", value);
+        const data = response.data;
+        console.log("this is data: ", data);
+        const newTodo = data.data.todo;
+        console.log("type of date: ", data.data.date);
+        console.log("new todo: ", newTodo);
+        // const newTodo = value;
         console.log(value);
         // alert(JSON.stringify(value));
         toast("📋 Todo added! Your productivity is on fire!", {
@@ -108,6 +110,7 @@ const AddTodo = () => {
           </CardHeader>
           <CardContent>
             <div>
+              <Label>Add New Todo</Label>
               <Input
                 className='border-white'
                 placeholder='New todo'
@@ -136,14 +139,14 @@ const AddTodo = () => {
                     </SelectContent>
                   </Select>
                   {formik.touched.todo && formik.errors.priority ? (
-                <div className="text-xs text-red-500">{formik.errors.priority}</div>
-              ) : null}
+                    <div className="text-xs text-red-500">{formik.errors.priority}</div>
+                  ) : null}
                 </div>
                 <div>
                   <Label>Set Due Date</Label>
                   <Popover>
                     <PopoverTrigger asChild
-                    className='bg-[#383838] border-white'>
+                      className='bg-[#383838] border-white'>
                       <Button
                         variant={"outline"}
                         className={cn(
@@ -169,13 +172,13 @@ const AddTodo = () => {
                     </PopoverContent>
                   </Popover>
                   {formik.touched.date && formik.errors.date ? (
-                <div className="text-xs text-red-500">{formik.errors.date}</div>
-              ) : null}
+                    <div className="text-xs text-red-500">{formik.errors.date}</div>
+                  ) : null}
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='flex gap-2 mt-1'>
                     <Label>Remind Me</Label>
-                    <ClockIcon/>
+                    <ClockIcon />
                   </div>
                   <div className='flex'>
                     <div>
@@ -196,8 +199,8 @@ const AddTodo = () => {
                         </SelectContent>
                       </Select>
                       {formik.touched.hours && formik.errors.hours ? (
-                <div className="text-xs text-red-500">{formik.errors.hours}</div>
-              ) : null}
+                        <div className="text-xs text-red-500">{formik.errors.hours}</div>
+                      ) : null}
                     </div>
                     <div>
                       <Select
@@ -217,8 +220,8 @@ const AddTodo = () => {
                         </SelectContent>
                       </Select>
                       {formik.touched.minutes && formik.errors.minutes ? (
-                <div className="text-xs text-red-500">{formik.errors.minutes}</div>
-              ) : null}
+                        <div className="text-xs text-red-500">{formik.errors.minutes}</div>
+                      ) : null}
                     </div>
                   </div>
                 </div>
