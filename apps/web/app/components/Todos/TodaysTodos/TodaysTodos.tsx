@@ -4,7 +4,7 @@ import { getAllTodos } from '@repo/db'
 import { TodaysTodoCheckBox } from '../../checkboxes/CheckBoxes';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks';
-import {ToggleEditTodo, setAddedTodoStatus, setTodos, setEditTodo, setEditValues} from "../../../../lib/store/features/todos/todoSlice"
+import {ToggleEditTodo, setAddedTodoStatus, setTodos, setEditTodo, setEditValues, setUpcomingTodos} from "../../../../lib/store/features/todos/todoSlice"
 import { Checkbox } from "../../ui/checkbox"
 import { toast } from 'sonner';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
@@ -37,7 +37,10 @@ const TodaysTodos = () => {
   const getTodaysTodo = async () => {
     try {
       const response = axios.get("/api/todaystodos");
-      const data = (await response).data as AllTodosType[]
+      const data = (await response).data as AllTodosType[];
+      const upcomingTodos = data.filter(item => item.isUpcoming === true);
+      console.log("upcoming todos are: ", upcomingTodos);
+      dispatch(setUpcomingTodos(upcomingTodos));
       dispatch(setTodos(data))
       console.log(data);
     } catch (error) {
