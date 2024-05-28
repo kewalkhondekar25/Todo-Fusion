@@ -3,6 +3,15 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
 import { setUpcomingTodos } from '../../../../lib/store/features/todos/todoSlice';
 import axios from 'axios';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../ui/card"
+
 
 type AllTodosType = {
   id: string;
@@ -48,20 +57,33 @@ const UpcomingTodos = () => {
   }
 
   const groupedTodos = groupTodosByDate(upcomingTodos);
+  const sortedDates = Object.keys(groupedTodos).sort((a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateA.getTime() - dateB.getTime();
+  });
 
   return (
     <div>
       {
-        Object.entries(groupedTodos).map(([date, todos]) => (
-          <div key={date}>
-            <h3>{date}</h3>
-            {todos && todos.map((todo: AllTodosType) => ( // Specify the type of todo here
-              <div key={todo.id}>
-                <p>{todo.todo}</p>
-              </div>
-            ))}
+        sortedDates.map(date => (
+          <Card key={date}>
+            <CardHeader>
+              <CardTitle>{date}</CardTitle>
+              <CardDescription></CardDescription>
+            </CardHeader>
+            <CardContent>
+              {groupedTodos[date].map((todo: AllTodosType) => (
+                <div key={todo.id}>
+                  <p>{todo.todo}</p>
+                </div>
+              ))}
+            </CardContent>
+            <CardFooter>
+              <p>Card Footer</p>
+            </CardFooter>
             <hr />
-          </div>
+          </Card>
         ))
       }
     </div>
