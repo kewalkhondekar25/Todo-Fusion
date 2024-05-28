@@ -5,7 +5,7 @@ import UpcomingTodos from '../../components/Todos/UpcomingTodos/UpcomingTodos';
 
 const page = async () => {
   return (
-    <div className='flex justify-center place-items-center'>
+    <div className=''>
       <UpcomingTodos/>
     </div>
   )

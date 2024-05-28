@@ -64,10 +64,10 @@ const UpcomingTodos = () => {
   });
 
   return (
-    <div>
+    <div className='flex justify-center gap-2'>
       {
         sortedDates.map(date => (
-          <Card key={date}>
+          <Card key={date} className='w-[300px] bg-[#292929] border-[#525252]'>
             <CardHeader>
               <CardTitle>{date}</CardTitle>
               <CardDescription></CardDescription>
@@ -82,7 +82,6 @@ const UpcomingTodos = () => {
             <CardFooter>
               <p>Card Footer</p>
             </CardFooter>
-            <hr />
           </Card>
         ))
       }
