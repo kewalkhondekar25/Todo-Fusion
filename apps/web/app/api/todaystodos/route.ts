@@ -56,20 +56,24 @@ export const POST = async (req: NextRequest) => {
     today.setHours(0, 0, 0, 0);
     const timeDiff = inputDate.getTime() - today.getTime();
     const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-    let isUpcoming;
+    let isFuture;
     if (dayDiff === 0) {
+      isFuture = false;
       console.log("it's today");
     } else if (dayDiff === 1) {
+      isFuture = true;
       console.log("it's tomorrow");
     } else if (dayDiff === -1) {
+      isFuture = false;
       console.log("it's yesterday");
     }else if (dayDiff > 1) {
+      isFuture = true;
       console.log("future");
     } else {
       console.log("it's past");
     }
 
-    const newTodo = await createTodos(reqBody)
+    const newTodo = await createTodos(reqBody, isFuture)
     return NextResponse.json({
       message: "todo added",
       data: newTodo

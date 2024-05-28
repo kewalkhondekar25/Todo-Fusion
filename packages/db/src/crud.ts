@@ -76,20 +76,9 @@ interface ReqBodyType {
   isUpcoming?: boolean;
   payload: string;
 }
-export const createTodos = async (reqBody: ReqBodyType) => {
+export const createTodos = async (reqBody: ReqBodyType, isFuture: boolean | undefined) => {
   try {
     const { todo, priority, minutes, hours, date,  payload } = reqBody;
-    // const TODAY = new Date();
-    // const DATE = date.getDate();
-    // const MONTH = date.getMonth();
-    // const YEAR = date.getFullYear();
-    // if(TODAY.getDay() && TODAY.getMonth() && TODAY.getFullYear() === DATE && MONTH && YEAR){
-    //   console.log("today");
-    // }else if(TODAY.getDay() && TODAY.getMonth() && TODAY.getFullYear() < DATE && MONTH && YEAR){
-    //   console.log("tomorrow");
-    // }else{
-    //   console.log("yesterday");
-    // }
     const todos = await prisma.todos.create({
       data: {
         todo: todo,
@@ -97,6 +86,7 @@ export const createTodos = async (reqBody: ReqBodyType) => {
         date: date,
         hours: hours,
         minutes: minutes,
+        isUpcoming: isFuture ? true : false,
         user: {
           connect: { email: payload }
         }
