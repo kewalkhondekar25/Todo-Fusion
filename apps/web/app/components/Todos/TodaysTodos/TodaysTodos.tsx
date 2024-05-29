@@ -39,9 +39,10 @@ const TodaysTodos = () => {
       const response = axios.get("/api/todaystodos");
       const data = (await response).data as AllTodosType[];
       const upcomingTodos = data.filter(item => item.isUpcoming === true);
-      console.log("upcoming todos are: ", upcomingTodos);
+      const todaysTodos = data.filter(item => item.isUpcoming === false);
+      console.log("today'''s todos are: ", todaysTodos);
       dispatch(setUpcomingTodos(upcomingTodos));
-      dispatch(setTodos(data))
+      dispatch(setTodos(todaysTodos))
       console.log(data);
     } catch (error) {
       console.log(error);
