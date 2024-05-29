@@ -11,6 +11,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../../ui/card"
+import { Button } from '../../ui/button';
+import { Checkbox } from '../../ui/checkbox';
+import AddTodo from '../../AddTodo';
 
 
 type AllTodosType = {
@@ -64,27 +67,35 @@ const UpcomingTodos = () => {
   });
 
   return (
-    <div className='flex justify-center gap-2'>
+    <div className='flex justify-center gap-3'>
       {
         sortedDates.map(date => (
-          <Card key={date} className='w-[300px] bg-[#292929] border-[#525252]'>
+          <Card key={date} className='relative w-[300px] bg-[#292929] border-[#525252]'>
             <CardHeader>
               <CardTitle>{date}</CardTitle>
               <CardDescription></CardDescription>
             </CardHeader>
             <CardContent>
               {groupedTodos[date].map((todo: AllTodosType) => (
-                <div key={todo.id}>
+                <div key={todo.id} className='flex place-items-center gap-2'>
+                  <Checkbox
+                    // onCheckedChange={() => handleCompleteTodo(todo.id)}
+                    checked={todo.isCompleted}
+                    disabled={todo.isCompleted}
+                  />
                   <p>{todo.todo}</p>
                 </div>
               ))}
             </CardContent>
             <CardFooter>
-              <p>Card Footer</p>
+              <Button>New Todo</Button>
             </CardFooter>
           </Card>
         ))
       }
+      <div className='absolute'>
+        <AddTodo/>
+      </div>
     </div>
   )
 }

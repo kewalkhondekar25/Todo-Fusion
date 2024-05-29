@@ -5,7 +5,7 @@ import UpcomingTodos from '../../components/Todos/UpcomingTodos/UpcomingTodos';
 
 const page = async () => {
   return (
-    <div className=''>
+    <div>
       <UpcomingTodos/>
     </div>
   )

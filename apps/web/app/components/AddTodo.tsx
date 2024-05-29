@@ -142,7 +142,7 @@ const AddTodo = () => {
                     <div className="text-xs text-red-500">{formik.errors.priority}</div>
                   ) : null}
                 </div>
-                <div>
+                <div className='flex-row'>
                   <Label>Set Due Date</Label>
                   <Popover>
                     <PopoverTrigger asChild
