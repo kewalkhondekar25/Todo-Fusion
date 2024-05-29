@@ -14,6 +14,8 @@ import {
 import { Button } from '../../ui/button';
 import { Checkbox } from '../../ui/checkbox';
 import AddTodo from '../../AddTodo';
+import { AddCloseTodoBtn } from '../../buttons/Buttons';
+import { PlusIcon } from '@radix-ui/react-icons';
 
 
 type AllTodosType = {
@@ -33,7 +35,7 @@ type AllTodosType = {
 const UpcomingTodos = () => {
 
   const dispatch = useAppDispatch();
-  const { upcomingTodos } = useAppSelector(state => state.todo)
+  const { upcomingTodos, isAddTodoOpen } = useAppSelector(state => state.todo)
 
   const getUpcomingTodos = async () => {
     const response = await axios.get("/api/todaystodos");
@@ -88,13 +90,20 @@ const UpcomingTodos = () => {
               ))}
             </CardContent>
             <CardFooter>
-              <Button>New Todo</Button>
+              {
+                isAddTodoOpen ? null : <AddCloseTodoBtn>
+                  <div className='flex place-items-center gap-2'>
+                    <PlusIcon />
+                    <span>New Todo</span>
+                  </div>
+                </AddCloseTodoBtn>
+              }
             </CardFooter>
           </Card>
         ))
       }
       <div className='absolute'>
-        <AddTodo/>
+      {isAddTodoOpen && <AddTodo/>}
       </div>
     </div>
   )

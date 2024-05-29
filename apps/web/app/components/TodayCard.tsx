@@ -42,9 +42,8 @@ const TodayCard = () => {
             <PlusIcon/>
             <span>New Todo</span>
           </div>
-      </AddCloseTodoBtn>
+          </AddCloseTodoBtn>
         }
-        
       </CardFooter>
     </Card>
     {isAddTodoOpen && <AddTodo/>}
