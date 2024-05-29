@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
-import { setUpcomingTodos } from '../../../../lib/store/features/todos/todoSlice';
+import { setAddedTodoStatus, setUpcomingTodos } from '../../../../lib/store/features/todos/todoSlice';
 import axios from 'axios';
 import {
   Card,
@@ -16,6 +16,7 @@ import { Checkbox } from '../../ui/checkbox';
 import AddTodo from '../../AddTodo';
 import { AddCloseTodoBtn } from '../../buttons/Buttons';
 import { PlusIcon } from '@radix-ui/react-icons';
+import { toast } from 'sonner';
 
 
 type AllTodosType = {
@@ -35,7 +36,7 @@ type AllTodosType = {
 const UpcomingTodos = () => {
 
   const dispatch = useAppDispatch();
-  const { upcomingTodos, isAddTodoOpen } = useAppSelector(state => state.todo)
+  const { upcomingTodos, isAddTodoOpen, todoCount } = useAppSelector(state => state.todo)
 
   const getUpcomingTodos = async () => {
     const response = await axios.get("/api/todaystodos");
@@ -46,7 +47,7 @@ const UpcomingTodos = () => {
 
   useEffect(() => {
     getUpcomingTodos();
-  }, []);
+  }, [todoCount]);
 
   const groupTodosByDate = (todos: AllTodosType[]) => {
     return todos.reduce((acc, todo) => {
@@ -68,44 +69,62 @@ const UpcomingTodos = () => {
     return dateA.getTime() - dateB.getTime();
   });
 
+  const handleCompleteTodo = async (todoId: string) => {
+    try {
+      //post id as payload
+      const response = await axios.post("/api/iscomplete", {id: todoId});
+      const data = response.data;
+      dispatch(setAddedTodoStatus(`${todoId}`));
+      toast("You're on a roll! Another todo checked off your list.🎯", {
+        description: ""
+      })
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   return (
-    <div className='flex justify-center gap-3'>
-      {
-        sortedDates.map(date => (
-          <Card key={date} className='relative w-[300px] bg-[#292929] border-[#525252]'>
-            <CardHeader>
-              <CardTitle>{date}</CardTitle>
-              <CardDescription></CardDescription>
-            </CardHeader>
-            <CardContent>
-              {groupedTodos[date].map((todo: AllTodosType) => (
-                <div key={todo.id} className='flex place-items-center gap-2'>
-                  <Checkbox
-                    // onCheckedChange={() => handleCompleteTodo(todo.id)}
-                    checked={todo.isCompleted}
-                    disabled={todo.isCompleted}
-                  />
-                  <p>{todo.todo}</p>
+    <div className='relative grid grid-cols-4 gap-3 p-3'>
+    {/* <div className='flex flex-col items-center gap-3'> */}
+    {
+      sortedDates.map(date => (
+        <Card key={date} className='w-auto bg-[#292929] border-[#525252]'>
+          <CardHeader>
+            <CardTitle>{date}</CardTitle>
+            <CardDescription></CardDescription>
+          </CardHeader>
+          <CardContent>
+            {groupedTodos[date].map((todo: AllTodosType) => (
+              <div key={todo.id} className='flex place-items-center gap-2'>
+                <Checkbox
+                  onCheckedChange={() => handleCompleteTodo(todo.id)}
+                  checked={todo.isCompleted}
+                  disabled={todo.isCompleted}
+                />
+                <p>{todo.todo}</p>
+              </div>
+            ))}
+          </CardContent>
+          <CardFooter>
+            {
+              isAddTodoOpen ? null : <AddCloseTodoBtn>
+                <div className='flex place-items-center gap-2'>
+                  <PlusIcon />
+                  <span>New Todo</span>
                 </div>
-              ))}
-            </CardContent>
-            <CardFooter>
-              {
-                isAddTodoOpen ? null : <AddCloseTodoBtn>
-                  <div className='flex place-items-center gap-2'>
-                    <PlusIcon />
-                    <span>New Todo</span>
-                  </div>
-                </AddCloseTodoBtn>
-              }
-            </CardFooter>
-          </Card>
-        ))
-      }
-      <div className='absolute'>
+              </AddCloseTodoBtn>
+            }
+          </CardFooter>
+        </Card>
+      ))
+    }
+    <div className='absolute top-1/4 left-1/3 '>
       {isAddTodoOpen && <AddTodo/>}
-      </div>
     </div>
+  {/* </div> */}
+</div>
+
   )
 }
 
