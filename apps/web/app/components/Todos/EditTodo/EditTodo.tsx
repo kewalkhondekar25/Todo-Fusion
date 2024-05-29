@@ -7,7 +7,7 @@ interface Payload {
 }
 const EditTodo = () => {
   return (
-    <section className='absolute top-20 left-40'>
+    <section>
       <EditTodoCard/>
     </section>
   )

@@ -9,6 +9,7 @@ import { Checkbox } from "../../ui/checkbox"
 import { toast } from 'sonner';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 import EditTodo from '../EditTodo/EditTodo';
+import EditTodoCard from '../EditTodo/EditTodoCard';
 
 type AllTodosType = {
   id: string;
@@ -103,7 +104,7 @@ const TodaysTodos = () => {
           )
         })
       }
-      {isEditTodoOpen && <EditTodo />}
+      {isEditTodoOpen && <EditTodoCard />}
     </div>
   )
 }

@@ -46,7 +46,7 @@ const TodayCard = () => {
         }
       </CardFooter>
     </Card>
-    {isAddTodoOpen && <AddTodo/>}
+    {isAddTodoOpen && <div className='absolute top-1/2 '><AddTodo/></div> }
     </section>
   )
 }

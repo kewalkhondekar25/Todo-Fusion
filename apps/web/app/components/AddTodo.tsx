@@ -98,7 +98,7 @@ const AddTodo = () => {
   })
 
   return (
-    <section className='absolute top-20 -left-20'>
+    <section className=' absolute z-10 '>
       <form onSubmit={(e) => {
         e.preventDefault();
         formik.handleSubmit()
