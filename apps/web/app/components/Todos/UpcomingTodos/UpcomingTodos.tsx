@@ -15,7 +15,7 @@ import { Button } from '../../ui/button';
 import { Checkbox } from '../../ui/checkbox';
 import AddTodo from '../../AddTodo';
 import { AddCloseTodoBtn } from '../../buttons/Buttons';
-import { Pencil1Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+import { ListBulletIcon, Pencil1Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import { toast } from 'sonner';
 import EditTodo from '../EditTodo/EditTodo';
 import EditTodoCard from '../EditTodo/EditTodoCard';
@@ -98,7 +98,10 @@ const UpcomingTodos = () => {
           <Card key={date} className=' w-auto bg-[#292929] border-[#525252]'>
             <CardHeader>
               <CardTitle>{date}</CardTitle>
-              <CardDescription></CardDescription>
+              <CardDescription className='flex place-items-center gap-2'>
+              <ListBulletIcon/>
+              {groupedTodos[date].length} todos
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {
