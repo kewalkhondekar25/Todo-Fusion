@@ -124,7 +124,7 @@ const UpcomingTodos = () => {
                         <TrashIcon className='ms-2 h-5 w-5' />
                       </div>}
                       {isEditTodoOpen && editValues?.id === todo.id && <EditTodoCard />}
-                      {/* {isAddTodoOpen && editValues?.id === todo.id && <AddTodo />} */}
+                      
                     </div>
                   </div>
                 ))
