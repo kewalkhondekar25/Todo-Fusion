@@ -32,7 +32,7 @@ const OptionCard = () => {
   };
   const dispatch = useAppDispatch();
   return (
-    <section className='absolute top-5 -right-20'>
+    <section>
       <Card className="relative w-48 bg-[#383838] border-[#525252]">
         <CardHeader>
           <div onClick={() => dispatch(toggleCardOption())}>

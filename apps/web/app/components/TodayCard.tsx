@@ -58,7 +58,11 @@ const TodayCard = () => {
         </CardFooter>
       </Card>
       {isAddTodoOpen && <div className='absolute top-1/2 '><AddTodo /></div>}
-      {isOptionOpen && <OptionCard/>}
+      {isOptionOpen &&
+        <div className='absolute top-5 -right-20'>
+          <OptionCard />
+        </div>
+      }
     </section>
   )
 }

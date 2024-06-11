@@ -1,7 +1,7 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
-import { ToggleEditTodo, setAddedTodoStatus, setEditTodo, setEditValues, setUpcomingTodos } from '../../../../lib/store/features/todos/todoSlice';
+import { ToggleEditTodo, setAddedTodoStatus, setEditTodo, setEditValues, setUpcomingTodos, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice';
 import axios from 'axios';
 import {
   Card,
@@ -19,6 +19,7 @@ import { ListBulletIcon, Pencil1Icon, PlusIcon, TrashIcon, DotsVerticalIcon } fr
 import { toast } from 'sonner';
 import EditTodo from '../EditTodo/EditTodo';
 import EditTodoCard from '../EditTodo/EditTodoCard';
+import OptionCard from '../TodoCardOption/OptionCard';
 
 
 type AllTodosType = {
@@ -37,8 +38,17 @@ type AllTodosType = {
 
 const UpcomingTodos = () => {
 
+  const [openOptionsId, setOpenOptionsId] = useState<any>(null);
+
   const dispatch = useAppDispatch();
-  const { upcomingTodos, isAddTodoOpen, todoCount, editValues, isEditTodoOpen } = useAppSelector(state => state.todo)
+  const {
+    upcomingTodos,
+    isAddTodoOpen,
+    todoCount,
+    editValues,
+    isEditTodoOpen,
+    isOptionOpen
+  } = useAppSelector(state => state.todo)
 
   const getUpcomingTodos = async () => {
     const response = await axios.get("/api/todaystodos");
@@ -72,7 +82,7 @@ const UpcomingTodos = () => {
   });
 
   console.log("sortedDates", sortedDates);
-  
+
 
   const handleCompleteTodo = async (todoId: string) => {
     try {
@@ -98,18 +108,18 @@ const UpcomingTodos = () => {
     <div className='relative grid grid-cols-4 gap-3 p-3'>
       {
         sortedDates.map((date, i) => (
-          <Card key={date} className=' w-auto bg-[#292929] border-[#525252]'>
+          <Card key={date} className='relative w-auto bg-[#292929] border-[#525252]'>
             <CardHeader className='flex flex-row justify-between'>
               <div>
                 <CardTitle>{date}</CardTitle>
                 <CardDescription className='flex place-items-center gap-2'>
-                <ListBulletIcon/>
-                {groupedTodos[date].length} todos
+                  <ListBulletIcon />
+                  {groupedTodos[date].length} todos
                 </CardDescription>
               </div>
               <div className='cursor-pointer'>
                 <DotsVerticalIcon
-                  onClick={() => alert(sortedDates[i])}/>
+                  onClick={() => { alert(sortedDates[i]); setOpenOptionsId(sortedDates[i]); dispatch(toggleCardOption()) }} />
               </div>
             </CardHeader>
             <CardContent>
@@ -122,14 +132,14 @@ const UpcomingTodos = () => {
                       disabled={todo.isCompleted}
                     />
                     <div className='relative flex-1 flex items-center group'>
-                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through ' : ''}flex-1`}>
+                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through' : ''}flex-1`}>
                         {todo.todo}
                       </div>
                       {todo.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
                         <Pencil1Icon
                           className='relative h-5 w-5'
                           onClick={() => { handleEditPayload(todo.id, todo.todo, todo.priority ?? "", todo.hours ?? "", todo.minutes ?? ""); dispatch(ToggleEditTodo()) }}
-                          />
+                        />
                         <TrashIcon className='ms-2 h-5 w-5' />
                       </div>}
                       {isEditTodoOpen && editValues?.id === todo.id && <EditTodoCard />}
@@ -148,6 +158,11 @@ const UpcomingTodos = () => {
                 </AddCloseTodoBtn>
               }
             </CardFooter>
+            {isOptionOpen && openOptionsId === sortedDates[i] &&
+              <div className='absolute z-10 top-5 right-5'>
+                <OptionCard />
+              </div>
+            }
           </Card>
         ))
       }
