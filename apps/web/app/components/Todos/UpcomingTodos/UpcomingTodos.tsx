@@ -15,7 +15,7 @@ import { Button } from '../../ui/button';
 import { Checkbox } from '../../ui/checkbox';
 import AddTodo from '../../AddTodo';
 import { AddCloseTodoBtn } from '../../buttons/Buttons';
-import { ListBulletIcon, Pencil1Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+import { ListBulletIcon, Pencil1Icon, PlusIcon, TrashIcon, DotsVerticalIcon } from '@radix-ui/react-icons';
 import { toast } from 'sonner';
 import EditTodo from '../EditTodo/EditTodo';
 import EditTodoCard from '../EditTodo/EditTodoCard';
@@ -71,6 +71,9 @@ const UpcomingTodos = () => {
     return dateA.getTime() - dateB.getTime();
   });
 
+  console.log("sortedDates", sortedDates);
+  
+
   const handleCompleteTodo = async (todoId: string) => {
     try {
       //post id as payload
@@ -94,14 +97,20 @@ const UpcomingTodos = () => {
   return (
     <div className='relative grid grid-cols-4 gap-3 p-3'>
       {
-        sortedDates.map(date => (
+        sortedDates.map((date, i) => (
           <Card key={date} className=' w-auto bg-[#292929] border-[#525252]'>
-            <CardHeader>
-              <CardTitle>{date}</CardTitle>
-              <CardDescription className='flex place-items-center gap-2'>
-              <ListBulletIcon/>
-              {groupedTodos[date].length} todos
-              </CardDescription>
+            <CardHeader className='flex flex-row justify-between'>
+              <div>
+                <CardTitle>{date}</CardTitle>
+                <CardDescription className='flex place-items-center gap-2'>
+                <ListBulletIcon/>
+                {groupedTodos[date].length} todos
+                </CardDescription>
+              </div>
+              <div className='cursor-pointer'>
+                <DotsVerticalIcon
+                  onClick={() => alert(sortedDates[i])}/>
+              </div>
             </CardHeader>
             <CardContent>
               {
