@@ -11,18 +11,20 @@ import {
 import { Checkbox } from "./ui/checkbox"
 import { DotsVerticalIcon, ListBulletIcon, PlusIcon } from '@radix-ui/react-icons'
 import { TodaysTodoCheckBox } from './checkboxes/CheckBoxes'
-import { useAppSelector } from '../../lib/store/hooks/hooks'
+import { useAppSelector, useAppDispatch } from '../../lib/store/hooks/hooks'
 import { AddCloseTodoBtn } from './buttons/Buttons'
 import AddTodo from './AddTodo'
 import { getAllTodos } from '@repo/db'
 import TestCard from './TestCard'
 import OptionCard from './Todos/TodoCardOption/OptionCard'
+import { toggleCardOption } from '../../lib/store/features/todos/todoSlice'
 
 
 const TodayCard = () => {
 
+  const dispatch = useAppDispatch();
   const { isChecked } = useAppSelector(state => state.checked);
-  const { isAddTodoOpen, todos } = useAppSelector(state => state.todo)
+  const { isAddTodoOpen, todos, isOptionOpen } = useAppSelector(state => state.todo)
   console.log("is checked?", isChecked);
 
   return (
@@ -38,7 +40,8 @@ const TodayCard = () => {
               {todos.length} todos
             </CardDescription>
           </div>
-          <div className='cursor-pointer'>
+          <div className='cursor-pointer'
+            onClick={() => dispatch(toggleCardOption())}>
             <DotsVerticalIcon />
           </div>
         </CardHeader>
@@ -55,7 +58,7 @@ const TodayCard = () => {
         </CardFooter>
       </Card>
       {isAddTodoOpen && <div className='absolute top-1/2 '><AddTodo /></div>}
-      <OptionCard/>
+      {isOptionOpen && <OptionCard/>}
     </section>
   )
 }

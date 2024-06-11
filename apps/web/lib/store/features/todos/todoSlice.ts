@@ -38,7 +38,8 @@ type TodoType = {
   isEditTodoOpen: boolean,
   editPayload: EditPayLoadType | null,
   editValues: EditTodoValType | null,
-  upcomingTodos: AllTodosType[]
+  upcomingTodos: AllTodosType[],
+  isOptionOpen: boolean
 };
 
 const initialState: TodoType = {
@@ -49,7 +50,8 @@ const initialState: TodoType = {
   isEditTodoOpen: false,
   editPayload: null,
   editValues: null,
-  upcomingTodos: []
+  upcomingTodos: [],
+  isOptionOpen: false
 };
 
 export const todoSlice = createSlice({
@@ -79,6 +81,9 @@ export const todoSlice = createSlice({
     },
     setUpcomingTodos: (state, action: PayloadAction<AllTodosType[]>) => {
       state.upcomingTodos = action.payload
+    },
+    toggleCardOption: (state) => {
+      state.isOptionOpen = !state.isOptionOpen;
     }
   }
 });
@@ -90,7 +95,8 @@ export const {
   ToggleEditTodo,
   setEditTodo,
   setEditValues,
-  setUpcomingTodos
+  setUpcomingTodos,
+  toggleCardOption
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
