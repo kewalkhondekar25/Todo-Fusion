@@ -16,6 +16,7 @@ import { AddCloseTodoBtn } from './buttons/Buttons'
 import AddTodo from './AddTodo'
 import { getAllTodos } from '@repo/db'
 import TestCard from './TestCard'
+import OptionCard from './Todos/TodoCardOption/OptionCard'
 
 
 const TodayCard = () => {
@@ -54,6 +55,7 @@ const TodayCard = () => {
         </CardFooter>
       </Card>
       {isAddTodoOpen && <div className='absolute top-1/2 '><AddTodo /></div>}
+      <OptionCard/>
     </section>
   )
 }
