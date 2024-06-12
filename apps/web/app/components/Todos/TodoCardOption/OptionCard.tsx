@@ -27,6 +27,10 @@ const OptionCard = () => {
     { text: 'Priority Sort', icon: <ActivityLogIcon /> },
     { text: 'Share', icon: <Link2Icon /> },
   ];
+
+  const dispatch = useAppDispatch();
+  const {todayCardColor, UpcomingCardColor, todos} = useAppSelector(state => state.todo);
+  
   const getDate = (value: string): {
     date: string | undefined,
     color: string
@@ -45,10 +49,11 @@ const OptionCard = () => {
     dispatch(setTodayCardColor(`${value}`));
     dispatch(setUpcomingCardColor(colorPayload));
     dispatch(toggleCardOption());
-    
   };
-  const dispatch = useAppDispatch();
-  const {todayCardColor, UpcomingCardColor, todos} = useAppSelector(state => state.todo);
+  const handleOptions = async (menu: string) => {
+    console.log(menu);
+  }
+  
   
   return (
     <section>
