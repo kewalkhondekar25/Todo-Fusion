@@ -24,18 +24,18 @@ const TodayCard = () => {
 
   const dispatch = useAppDispatch();
   const { isChecked } = useAppSelector(state => state.checked);
-  const { isAddTodoOpen, todos, isOptionOpen } = useAppSelector(state => state.todo)
+  const { isAddTodoOpen, todos, isOptionOpen, todayCardColor } = useAppSelector(state => state.todo)
   console.log("is checked?", isChecked);
-
+  // bg-[#292929]
   return (
     <section className='relative'>
-      <Card className="w-[350px] bg-[#292929] border-[#525252]">
+      <Card className={`w-[350px] ${todayCardColor === "292929" ? "bg-[#292929]" : `bg-[#${todayCardColor}] text-black`} border-[#525252]`}>
         <CardHeader className='flex flex-row justify-between'>
           <div>
             <CardTitle>
               <div>Today</div>
             </CardTitle>
-            <CardDescription className='flex place-items-center gap-2'>
+            <CardDescription className={`flex place-items-center gap-2 ${todayCardColor === "292929" ? "" : "text-black"} `}>
               <ListBulletIcon />
               {todos.length} todos
             </CardDescription>

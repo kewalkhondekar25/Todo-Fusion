@@ -16,8 +16,8 @@ import {
 } from '@radix-ui/react-icons'
 import { Label } from "../../ui/label2"
 import { RadioGroup, RadioGroupItem } from "../../ui/radio"
-import { useAppDispatch } from '../../../../lib/store/hooks/hooks'
-import { toggleCardOption } from '../../../../lib/store/features/todos/todoSlice'
+import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
+import {setTodayCardColor, setUpcomingCardColor, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice'
 
 
 
@@ -27,10 +27,32 @@ const OptionCard = () => {
     { text: 'Priority Sort', icon: <ActivityLogIcon /> },
     { text: 'Share', icon: <Link2Icon /> },
   ];
+  const getDate = (value: string): {
+    date: string | undefined,
+    color: string
+  } => {
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let monthNumber = months[new Date().getMonth()];
+    let monthDate = new Date().getDate().toString();
+    return {
+      date: `${monthNumber} ${monthDate}`,
+      color:value
+    }
+  }
   const handleValueChange = (value: string) => {
     alert(`Selected value: ${value}`);
+    console.log(value);
+    console.log(getDate(value));
+    const upcomingColorData = getDate(value);
+    const colorPayload = [upcomingColorData, ...UpcomingCardColor];
+    dispatch(setTodayCardColor(`${value}`));
+    dispatch(setUpcomingCardColor(colorPayload));
+    dispatch(toggleCardOption());
+    
   };
   const dispatch = useAppDispatch();
+  const {todayCardColor, UpcomingCardColor} = useAppSelector(state => state.todo);
+  
   return (
     <section>
       <Card className="relative w-48 bg-[#383838] border-[#525252]">
@@ -50,12 +72,12 @@ const OptionCard = () => {
         <CardFooter className='flex justify-between place-items-center'>
           <RadioGroup
             className='flex'
-            defaultValue="default"
+            defaultValue={todayCardColor}
             onValueChange={handleValueChange}>
-            <RadioGroupItem value="default" id="default" />
-            <RadioGroupItem value="blue" id="blue" className='bg-[#D0DAFA] text-black' />
-            <RadioGroupItem value="pink" id="pink" className='bg-[#E2AA96] text-black' />
-            <RadioGroupItem value="yellow" id="yellow" className='bg-[#ECDFAB] text-black' />
+            <RadioGroupItem value="C2D5C3" id="green" className='bg-[#C2D5C3] text-black'  />
+            <RadioGroupItem value="D0DAFA" id="blue" className='bg-[#D0DAFA] text-black' />
+            <RadioGroupItem value="E2AA96" id="pink" className='bg-[#E2AA96] text-black' />
+            <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#ECDFAB] text-black' />
           </RadioGroup>
           <MagicWandIcon />
         </CardFooter>

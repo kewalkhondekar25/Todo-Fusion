@@ -20,6 +20,9 @@ import { toast } from 'sonner';
 import EditTodo from '../EditTodo/EditTodo';
 import EditTodoCard from '../EditTodo/EditTodoCard';
 import OptionCard from '../TodoCardOption/OptionCard';
+import { previousDay } from 'date-fns';
+import classnames from 'classnames';
+
 
 
 type AllTodosType = {
@@ -38,8 +41,13 @@ type AllTodosType = {
 
 const UpcomingTodos = () => {
 
-  const [openOptionsId, setOpenOptionsId] = useState<any>(null);
+  const colors = ["#F0F0F0", "#EEA68F", "#D0DAFA", "#FFD0DF", "#ECDFAB", "#C2D5C3"];
 
+  const [openOptionsId, setOpenOptionsId] = useState<any>(null);
+  const [highlightedCardId, setHighlightedCardId] = useState<string[]>([]);
+  const [selectedCard, setSelectedCard] = useState<string>();
+  console.log(highlightedCardId);
+  console.log(selectedCard);
   const dispatch = useAppDispatch();
   const {
     upcomingTodos,
@@ -47,7 +55,8 @@ const UpcomingTodos = () => {
     todoCount,
     editValues,
     isEditTodoOpen,
-    isOptionOpen
+    isOptionOpen,
+    todayCardColor
   } = useAppSelector(state => state.todo)
 
   const getUpcomingTodos = async () => {
@@ -81,9 +90,6 @@ const UpcomingTodos = () => {
     return dateA.getTime() - dateB.getTime();
   });
 
-  console.log("sortedDates", sortedDates);
-
-
   const handleCompleteTodo = async (todoId: string) => {
     try {
       //post id as payload
@@ -93,7 +99,6 @@ const UpcomingTodos = () => {
       toast("You're on a roll! Another todo checked off your list.🎯", {
         description: ""
       })
-      console.log(data);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -103,12 +108,24 @@ const UpcomingTodos = () => {
     dispatch(setEditTodo({ id, todo, priority, hours, minutes }));
     dispatch(setEditValues({ ...editValues, id }))
   }
-
+// `${colors[i % colors.length]}`
   return (
     <div className='relative grid grid-cols-4 gap-3 p-3'>
       {
         sortedDates.map((date, i) => (
-          <Card key={date} className='relative w-auto bg-[#292929] border-[#525252]'>
+          <Card key={date} 
+          style={{ 
+            backgroundColor: `${selectedCard === sortedDates[i] ? `#${todayCardColor}` : `${colors[i % colors.length]}`}` , 
+            color: "black"
+          }}
+          className='relative'
+          // className={classnames('relative w-auto border-[#525252]', {
+          //   'bg-black text-white': colors[i % colors.length] === "292929",
+          //   'text-black': colors[i % colors.length] !== "292929",
+          //   [`bg-[#${todayCardColor}] text-black`]: selectedCard === sortedDates[i]
+          // })}
+          >
+            
             <CardHeader className='flex flex-row justify-between'>
               <div>
                 <CardTitle>{date}</CardTitle>
@@ -119,7 +136,15 @@ const UpcomingTodos = () => {
               </div>
               <div className='cursor-pointer'>
                 <DotsVerticalIcon
-                  onClick={() => { alert(sortedDates[i]); setOpenOptionsId(sortedDates[i]); dispatch(toggleCardOption()) }} />
+                  onClick={() => {
+                    setSelectedCard(sortedDates[i]); 
+                    setHighlightedCardId(prev => {
+                      const newHighlightedCardId = [...prev, sortedDates[i]].filter(Boolean) as string[];
+                      return newHighlightedCardId;
+                    });
+                    setOpenOptionsId(sortedDates[i]); 
+                    dispatch(toggleCardOption()); 
+                    }}/>
               </div>
             </CardHeader>
             <CardContent>

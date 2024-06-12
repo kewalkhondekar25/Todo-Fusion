@@ -30,6 +30,11 @@ type EditTodoValType = {
   minutes?: string
 }
 
+type UpcomingCardColorType = {
+  date: string | undefined,
+  color: string
+}
+
 type TodoType = {
   isAddTodoOpen: boolean;
   todos: AllTodosType[];
@@ -39,7 +44,9 @@ type TodoType = {
   editPayload: EditPayLoadType | null,
   editValues: EditTodoValType | null,
   upcomingTodos: AllTodosType[],
-  isOptionOpen: boolean
+  isOptionOpen: boolean,
+  todayCardColor: string,
+  UpcomingCardColor: UpcomingCardColorType[]
 };
 
 const initialState: TodoType = {
@@ -51,7 +58,9 @@ const initialState: TodoType = {
   editPayload: null,
   editValues: null,
   upcomingTodos: [],
-  isOptionOpen: false
+  isOptionOpen: false,
+  todayCardColor: "C2D5C3",
+  UpcomingCardColor: []
 };
 
 export const todoSlice = createSlice({
@@ -84,6 +93,12 @@ export const todoSlice = createSlice({
     },
     toggleCardOption: (state) => {
       state.isOptionOpen = !state.isOptionOpen;
+    },
+    setTodayCardColor: (state, action: PayloadAction<string>) => {
+      state.todayCardColor = action.payload
+    },
+    setUpcomingCardColor: (state, action: PayloadAction<UpcomingCardColorType[]>) => {
+      state.UpcomingCardColor= action.payload;
     }
   }
 });
@@ -96,7 +111,9 @@ export const {
   setEditTodo,
   setEditValues,
   setUpcomingTodos,
-  toggleCardOption
+  toggleCardOption,
+  setTodayCardColor,
+  setUpcomingCardColor
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
