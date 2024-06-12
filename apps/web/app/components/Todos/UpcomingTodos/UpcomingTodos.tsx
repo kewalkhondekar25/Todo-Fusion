@@ -118,18 +118,11 @@ const UpcomingTodos = () => {
             backgroundColor: `${selectedCard === sortedDates[i] ? `#${todayCardColor}` : `${colors[i % colors.length]}`}` , 
             color: "black"
           }}
-          className='relative'
-          // className={classnames('relative w-auto border-[#525252]', {
-          //   'bg-black text-white': colors[i % colors.length] === "292929",
-          //   'text-black': colors[i % colors.length] !== "292929",
-          //   [`bg-[#${todayCardColor}] text-black`]: selectedCard === sortedDates[i]
-          // })}
-          >
-            
+          className='relative'>
             <CardHeader className='flex flex-row justify-between'>
               <div>
                 <CardTitle>{date}</CardTitle>
-                <CardDescription className='flex place-items-center gap-2'>
+                <CardDescription className='flex place-items-center gap-2 text-gray-600'>
                   <ListBulletIcon />
                   {groupedTodos[date].length} todos
                 </CardDescription>
@@ -157,7 +150,7 @@ const UpcomingTodos = () => {
                       disabled={todo.isCompleted}
                     />
                     <div className='relative flex-1 flex items-center group'>
-                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through' : ''}flex-1`}>
+                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through' : ''}`}>
                         {todo.todo}
                       </div>
                       {todo.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>

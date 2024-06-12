@@ -40,9 +40,6 @@ const OptionCard = () => {
     }
   }
   const handleValueChange = (value: string) => {
-    alert(`Selected value: ${value}`);
-    console.log(value);
-    console.log(getDate(value));
     const upcomingColorData = getDate(value);
     const colorPayload = [upcomingColorData, ...UpcomingCardColor];
     dispatch(setTodayCardColor(`${value}`));
