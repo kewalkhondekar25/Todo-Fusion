@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from "next/server"
 export const POST = async (req: NextRequest) => {
   try {
     const payload = await req.json();
-    const allCompletedTodos = await updateAllCompleteTodo(payload);
+    const {yetToComplete} = payload;
+    const allCompletedTodos = await updateAllCompleteTodo(yetToComplete);
     if(allCompletedTodos){
       return NextResponse.json({
         message: "all todos completed",

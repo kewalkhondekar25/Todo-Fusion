@@ -17,7 +17,9 @@ import {
 import { Label } from "../../ui/label2"
 import { RadioGroup, RadioGroupItem } from "../../ui/radio"
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
-import {setTodayCardColor, setUpcomingCardColor, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice'
+import {setAddedTodoStatus, setTodayCardColor, setUpcomingCardColor, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice'
+import axios from 'axios'
+import { toast } from 'sonner'
 
 
 
@@ -30,6 +32,9 @@ const OptionCard = () => {
 
   const dispatch = useAppDispatch();
   const {todayCardColor, UpcomingCardColor, todos} = useAppSelector(state => state.todo);
+
+  const yetToComplete = todos.filter(item => item.isCompleted === false).map(item => item.id);
+  console.log("ids: ", yetToComplete);
   
   const getDate = (value: string): {
     date: string | undefined,
@@ -51,7 +56,22 @@ const OptionCard = () => {
     dispatch(toggleCardOption());
   };
   const handleOptions = async (menu: string) => {
-    console.log(menu);
+    try {
+      if(menu === "Mark All"){
+        const response = await axios.post("/api/completealltodos", {yetToComplete})
+        const result = response.data;
+        if(result){
+          dispatch(setAddedTodoStatus(`${yetToComplete}`));
+          dispatch(toggleCardOption());
+          toast("Mission accomplished⛳! All todos completed!", {
+            description: "You’ve finished all your tasks. Well done!🎉"
+          })
+        }
+      }
+    } catch (error) {
+      const errMsg = error instanceof Error;
+      console.log(errMsg);
+    }
   }
   
   
