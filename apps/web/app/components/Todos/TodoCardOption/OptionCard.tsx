@@ -48,7 +48,7 @@ const OptionCard = () => {
     
   };
   const dispatch = useAppDispatch();
-  const {todayCardColor, UpcomingCardColor} = useAppSelector(state => state.todo);
+  const {todayCardColor, UpcomingCardColor, todos} = useAppSelector(state => state.todo);
   
   return (
     <section>
@@ -60,7 +60,10 @@ const OptionCard = () => {
         </CardHeader>
         <CardContent className='text-sm cursor-pointer'>
           {items.map((item, index) => (
-            <div className='flex justify-between place-items-center mb-2' key={index}>
+            <div 
+              key={index}
+              className='flex justify-between place-items-center mb-2' 
+              onClick={() => handleOptions(item.text)}>
               <div>{item.text}</div>
               {item.icon}
             </div>

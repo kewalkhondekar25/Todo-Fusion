@@ -142,4 +142,23 @@ export const updateTodo = async (updatePayload: UpdateParamsType) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+//delete todo
+interface deleteType {
+  id: string
 }
+export const deleteTodo = async (payload: deleteType) => {
+  const {id} = payload
+  try {
+    const deletedTodo = await prisma.todos.delete({
+      where: {
+        id: id
+      }
+    })
+  return deletedTodo;
+  } catch (error) {
+    const errorMessage = error instanceof Error
+    console.log(errorMessage);
+  }
+} 

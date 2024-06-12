@@ -66,11 +66,25 @@ const TodaysTodos = () => {
       console.log(error.message);
     }
   };
-
   const handleEditPayload = (id: string, todo: string, priority: string, hours: string, minutes: string) => {
     dispatch(setEditTodo({ id, todo, priority, hours, minutes }));
     dispatch(setEditValues({ ...editValues, id }))
-  }
+  };
+  const handleDeleteTodo = async (deleteId: string) => {
+    try {
+      const response = await axios.post("/api/deletetodos", {id: deleteId});
+      const result = response.data;
+      if(result){
+        dispatch(setAddedTodoStatus(`${deleteId}`));
+        toast("That todo is history!🪦", {
+          description: "Todo deleted successfully🗑️"
+        })
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error
+      console.log(errorMessage);
+    }
+  };
 
   useEffect(() => {
     getTodaysTodo()
@@ -83,6 +97,7 @@ const TodaysTodos = () => {
           return (
             <div key={i} className='flex place-items-center gap-2'>
               <Checkbox
+                className='border-black'
                 onCheckedChange={() => handleCompleteTodo(item.id)}
                 checked={item.isCompleted}
                 disabled={item.isCompleted}
@@ -97,7 +112,9 @@ const TodaysTodos = () => {
                     className='relative h-5 w-5'
                     onClick={() => { handleEditPayload(item.id, item.todo, item.priority ?? "", item.hours ?? "", item.minutes ?? ""); dispatch(ToggleEditTodo()) }}
                   />
-                  <TrashIcon className='ms-2 h-5 w-5' />
+                  <TrashIcon 
+                    className='ms-2 h-5 w-5'
+                    onClick={() => handleDeleteTodo(item.id)}/>
                 </div>}
               </div>
             </div>

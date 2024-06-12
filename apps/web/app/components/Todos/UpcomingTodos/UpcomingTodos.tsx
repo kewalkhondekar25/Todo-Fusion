@@ -103,12 +103,26 @@ const UpcomingTodos = () => {
       console.log(error.message);
     }
   };
-
   const handleEditPayload = (id: string, todo: string, priority: string, hours: string, minutes: string) => {
     dispatch(setEditTodo({ id, todo, priority, hours, minutes }));
     dispatch(setEditValues({ ...editValues, id }))
-  }
-// `${colors[i % colors.length]}`
+  };
+  const handleDeleteTodo = async (deleteId: string) => {
+    try {
+      const response = await axios.post("/api/deletetodos", {id: deleteId});
+      const result = response.data;
+      if(result){
+        dispatch(setAddedTodoStatus(`${deleteId}`));
+        toast("That todo is history!🪦", {
+          description: "Todo deleted successfully🗑️"
+        })
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error
+      console.log(errorMessage);
+    }
+  };
+
   return (
     <div className='relative grid grid-cols-4 gap-3 p-3'>
       {
@@ -122,7 +136,7 @@ const UpcomingTodos = () => {
             <CardHeader className='flex flex-row justify-between'>
               <div>
                 <CardTitle>{date}</CardTitle>
-                <CardDescription className='flex place-items-center gap-2 text-gray-600'>
+                <CardDescription className='flex place-items-center gap-2 text-gray-800'>
                   <ListBulletIcon />
                   {groupedTodos[date].length} todos
                 </CardDescription>
@@ -145,12 +159,13 @@ const UpcomingTodos = () => {
                 groupedTodos[date].map((todo: AllTodosType) => (
                   <div key={todo.id} className='flex place-items-center gap-2'>
                     <Checkbox
+                      className='border-black'
                       onCheckedChange={() => handleCompleteTodo(todo.id)}
                       checked={todo.isCompleted}
                       disabled={todo.isCompleted}
                     />
                     <div className='relative flex-1 flex items-center group'>
-                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through' : ''}`}>
+                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through ' : ''}flex-1`}>
                         {todo.todo}
                       </div>
                       {todo.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
@@ -158,7 +173,9 @@ const UpcomingTodos = () => {
                           className='relative h-5 w-5'
                           onClick={() => { handleEditPayload(todo.id, todo.todo, todo.priority ?? "", todo.hours ?? "", todo.minutes ?? ""); dispatch(ToggleEditTodo()) }}
                         />
-                        <TrashIcon className='ms-2 h-5 w-5' />
+                        <TrashIcon 
+                          className='ms-2 h-5 w-5'
+                          onClick={() => handleDeleteTodo(todo.id)} />
                       </div>}
                       {isEditTodoOpen && editValues?.id === todo.id && <EditTodoCard />}
                     </div>

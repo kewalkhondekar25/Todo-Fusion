@@ -35,7 +35,7 @@ const TodayCard = () => {
             <CardTitle>
               <div>Today</div>
             </CardTitle>
-            <CardDescription className={`flex place-items-center gap-2 ${todayCardColor === "292929" ? "" : "text-black"} `}>
+            <CardDescription className={`flex place-items-center gap-2 ${todayCardColor === "292929" ? "" : "text-gray-800"} `}>
               <ListBulletIcon />
               {todos.length} todos
             </CardDescription>
