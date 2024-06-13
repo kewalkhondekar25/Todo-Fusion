@@ -1,17 +1,10 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
+  "build": {
+    "apps": [
+      {
+        "src": "/apps/web",
+        "cmd": "npm run build"
+      }
+    ]
   }
 }
