@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { signIn } from "next-auth/react"
+import { toast } from "sonner";
 
 const signUpSchema = yup.object({
   firstName: yup.string().min(3, "Name must be at least 3 characters").required("Whoops! Looks like Name is Required."),
@@ -38,11 +39,16 @@ export function SignupFormDemo() {
       try {
         const response = await axios.post("/api/signup", value);
         console.log(response.data);
-        alert("Sign Up Successful")
+        toast("Success! 🕵️‍♂️", {
+          description: "You've signed up successfully"
+        })
         router.push("/signin")
       } catch (error: any) {
         if(error.response && error.response.status === 409){
           formik.setErrors({ email: "Whoops! Looks like the Email already exists." });
+          toast("Heads Up! ⚠️", {
+            description: "This email is already registered. Please log in or use a different email."
+          })
         }
         console.log(error);
       }
