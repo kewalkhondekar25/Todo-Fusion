@@ -61,10 +61,17 @@ const UpcomingTodos = () => {
   } = useAppSelector(state => state.todo)
 
   const getUpcomingTodos = async () => {
-    const response = await axios.get("/api/todaystodos");
-    const allTodos = response.data as AllTodosType[];
-    const futureTodos = allTodos.filter(item => item.isUpcoming === true);
-    dispatch(setUpcomingTodos(futureTodos));
+    try {
+      const response = await axios.get("/api/todaystodos");
+      const allTodos = response.data as AllTodosType[];
+      if(allTodos){
+        const futureTodos = allTodos.filter(item => item.isUpcoming === true);
+        dispatch(setUpcomingTodos(futureTodos));
+      }
+    } catch (error) {
+      const errMsg = error instanceof Error;
+      console.log(errMsg);
+    }
   }
 
   useEffect(() => {

@@ -9,9 +9,10 @@ import {
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { NextURL } from "next/dist/server/web/next-url";
 import { useSearchParams } from 'next/navigation'
+import { toast } from "sonner";
 
 
 const signinSchema = yup.object({
@@ -22,9 +23,9 @@ const signinSchema = yup.object({
 
 
 export function SignupFormDemo() {
+  
   const searchParams = useSearchParams();
   console.log(searchParams.get("error"));
-  
   
   const [signInError, setSignInError] = useState<string | null>(null);
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
@@ -43,12 +44,17 @@ export function SignupFormDemo() {
           redirect: false
         })
         if (result?.error === "CredentialsSignin") {
-          alert("wrong credentials")
+          toast("Oops! 🚫", {
+            description: "Invalid credentials. Please try again."
+          })
           setPasswordIncorrect(true);
           setSignInError(null);
         } else {
           setPasswordIncorrect(false);
           setSignInError(null);
+          toast(`Welcome to Fusion! 📌`, {
+            description: "Stay organized, stay productive. Let's conquer those tasks together!"
+          })
         }
       } catch (error: any) {
         console.log(error);
