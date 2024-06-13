@@ -47,7 +47,9 @@ type TodoType = {
   isOptionOpen: boolean,
   todayCardColor: string,
   UpcomingCardColor: UpcomingCardColorType[],
-  UpcomingAllCmpltTodo: AllTodosType[]
+  UpcomingAllCmpltTodo: AllTodosType[],
+  isPrioritySorted: boolean
+  isTodayPrioritySorted: boolean
 };
 
 const initialState: TodoType = {
@@ -62,7 +64,9 @@ const initialState: TodoType = {
   isOptionOpen: false,
   todayCardColor: "C2D5C3",
   UpcomingCardColor: [],
-  UpcomingAllCmpltTodo: []
+  UpcomingAllCmpltTodo: [],
+  isPrioritySorted: false,
+  isTodayPrioritySorted: false
 };
 
 export const todoSlice = createSlice({
@@ -104,7 +108,14 @@ export const todoSlice = createSlice({
     },
     setUpcomingAllCmpltTodo: (state, action: PayloadAction<AllTodosType[]>) => {
       state.UpcomingAllCmpltTodo = action.payload;
+    },
+    setPrioritySort: (state) => {
+      state.isPrioritySorted = !state.isPrioritySorted
+    },
+    setTodayPrioritySort: (state) => {
+      state.isTodayPrioritySorted = !state.isTodayPrioritySorted
     }
+
   }
 });
 export const { 
@@ -119,7 +130,9 @@ export const {
   toggleCardOption,
   setTodayCardColor,
   setUpcomingCardColor,
-  setUpcomingAllCmpltTodo
+  setUpcomingAllCmpltTodo,
+  setPrioritySort,
+  setTodayPrioritySort
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

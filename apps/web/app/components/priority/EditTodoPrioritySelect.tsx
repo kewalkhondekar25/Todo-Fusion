@@ -18,7 +18,7 @@ const EditTodoPrioritySelect = () => {
   const dispatch = useAppDispatch()
   return (
     <Select name="priority" 
-      onValueChange={e => {dispatch(setEditValues({...editValues, priority: e})); alert("priority changes")}}
+      onValueChange={e => dispatch(setEditValues({...editValues, priority: e}))}
       defaultValue={`${editPayload?.priority}`}>
       <SelectTrigger className=" border-white gap-2">
         <ExclamationTriangleIcon/>

@@ -19,7 +19,9 @@ import { RadioGroup, RadioGroupItem } from "../../ui/radio"
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
 import {
   setAddedTodoStatus, 
+  setPrioritySort, 
   setTodayCardColor, 
+  setTodayPrioritySort, 
   setUpcomingCardColor, 
   toggleCardOption
 } from '../../../../lib/store/features/todos/todoSlice'
@@ -43,7 +45,9 @@ const OptionCard = () => {
     todayCardColor, 
     UpcomingCardColor, 
     todos,
-    UpcomingAllCmpltTodo
+    UpcomingAllCmpltTodo,
+    isPrioritySorted,
+    isTodayPrioritySorted
   } = useAppSelector(state => state.todo);
 
   const yetToComplete = todos.filter(item => !item.isCompleted ).map(item => item.id);
@@ -83,6 +87,17 @@ const OptionCard = () => {
             description: "You’ve finished all your tasks. Well done!🎉"
           });
         }
+      }
+      else if(pathName === "/upcoming" && menu === "Priority Sort"){
+        console.log("sort");
+        dispatch(setPrioritySort());
+        dispatch(toggleCardOption());
+        isPrioritySorted ? toast("Todos sorted 🃏") : toast("Todos sorted", {
+          description: "High Priority🔝"
+        })
+      }else if(pathName === "/today" && menu === "Priority Sort"){
+        console.log("today sort");
+        dispatch(setTodayPrioritySort())
       }
     } catch (error) {
       console.error('Error updating todos:', error);

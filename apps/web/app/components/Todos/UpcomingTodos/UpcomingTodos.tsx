@@ -56,7 +56,8 @@ const UpcomingTodos = () => {
     editValues,
     isEditTodoOpen,
     isOptionOpen,
-    todayCardColor
+    todayCardColor,
+    isPrioritySorted
   } = useAppSelector(state => state.todo)
 
   const getUpcomingTodos = async () => {
@@ -109,9 +110,9 @@ const UpcomingTodos = () => {
   };
   const handleDeleteTodo = async (deleteId: string) => {
     try {
-      const response = await axios.post("/api/deletetodos", {id: deleteId});
+      const response = await axios.post("/api/deletetodos", { id: deleteId });
       const result = response.data;
-      if(result){
+      if (result) {
         dispatch(setAddedTodoStatus(`${deleteId}`));
         toast("That todo is history!🪦", {
           description: "Todo deleted successfully🗑️"
@@ -123,10 +124,9 @@ const UpcomingTodos = () => {
     }
   };
 
-  if(!sortedDates.length){
-    return(
+  if (!sortedDates.length) {
+    return (
       <div className=" relative flex justify-center place-items-center h-screen">
-        {/* <div className='absolute top-20'>no upcoming todos</div> */}
         <div className='absolute top-1/4 right-2/3 '><AddTodo /></div>
       </div>
     )
@@ -136,12 +136,12 @@ const UpcomingTodos = () => {
     <div className='relative grid grid-cols-4 gap-3 p-3'>
       {
         sortedDates.map((date, i) => (
-          <Card key={date} 
-          style={{ 
-            backgroundColor: `${selectedCard === sortedDates[i] ? `#${todayCardColor}` : `${colors[i % colors.length]}`}` , 
-            color: "black"
-          }}
-          className='relative'>
+          <Card key={date}
+            style={{
+              backgroundColor: `${selectedCard === sortedDates[i] ? `#${todayCardColor}` : `${colors[i % colors.length]}`}`,
+              color: "black"
+            }}
+            className='relative'>
             <CardHeader className='flex flex-row justify-between'>
               <div>
                 <CardTitle>{date}</CardTitle>
@@ -153,44 +153,72 @@ const UpcomingTodos = () => {
               <div className='cursor-pointer'>
                 <DotsVerticalIcon
                   onClick={() => {
+                    console.log("sortedDates: ", groupedTodos[date]);
                     dispatch(setUpcomingAllCmpltTodo(groupedTodos[date]));
-                    setSelectedCard(sortedDates[i]); 
+                    setSelectedCard(sortedDates[i]);
                     setHighlightedCardId(prev => {
                       const newHighlightedCardId = [...prev, sortedDates[i]].filter(Boolean) as string[];
                       return newHighlightedCardId;
                     });
-                    setOpenOptionsId(sortedDates[i]); 
-                    dispatch(toggleCardOption()); 
-                    }}/>
+                    setOpenOptionsId(sortedDates[i]);
+                    dispatch(toggleCardOption());
+                  }} />
               </div>
             </CardHeader>
             <CardContent>
               {
-                groupedTodos[date].map((todo: AllTodosType) => (
-                  <div key={todo.id} className='flex place-items-center gap-2'>
-                    <Checkbox
-                      className='border-black'
-                      onCheckedChange={() => handleCompleteTodo(todo.id)}
-                      checked={todo.isCompleted}
-                      disabled={todo.isCompleted}
-                    />
-                    <div className='relative flex-1 flex items-center group'>
-                      <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through ' : ''}flex-1`}>
-                        {todo.todo}
+                isPrioritySorted ? groupedTodos[date]
+                  .sort((a: AllTodosType, b: AllTodosType) => (a.priority ?? "4").localeCompare(b.priority ?? "4"))
+                  .map((todo: AllTodosType) => (
+                    <div key={todo.id} className='flex place-items-center gap-2'>
+                      <Checkbox
+                        className='border-black'
+                        onCheckedChange={() => handleCompleteTodo(todo.id)}
+                        checked={todo.isCompleted}
+                        disabled={todo.isCompleted}
+                      />
+                      <div className='relative flex-1 flex items-center group'>
+                        <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through ' : ''}flex-1`}>
+                          {todo.todo}
+                        </div>
+                        {todo.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
+                          <Pencil1Icon
+                            className='relative h-5 w-5'
+                            onClick={() => { handleEditPayload(todo.id, todo.todo, todo.priority ?? "", todo.hours ?? "", todo.minutes ?? ""); dispatch(ToggleEditTodo()) }}
+                          />
+                          <TrashIcon
+                            className='ms-2 h-5 w-5'
+                            onClick={() => handleDeleteTodo(todo.id)} />
+                        </div>}
+                        {isEditTodoOpen && editValues?.id === todo.id && <EditTodoCard />}
                       </div>
-                      {todo.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
-                        <Pencil1Icon
-                          className='relative h-5 w-5'
-                          onClick={() => { handleEditPayload(todo.id, todo.todo, todo.priority ?? "", todo.hours ?? "", todo.minutes ?? ""); dispatch(ToggleEditTodo()) }}
-                        />
-                        <TrashIcon 
-                          className='ms-2 h-5 w-5'
-                          onClick={() => handleDeleteTodo(todo.id)} />
-                      </div>}
-                      {isEditTodoOpen && editValues?.id === todo.id && <EditTodoCard />}
                     </div>
-                  </div>
-                ))
+                  )) :
+                  groupedTodos[date].map((todo: AllTodosType) => (
+                    <div key={todo.id} className='flex place-items-center gap-2'>
+                      <Checkbox
+                        className='border-black'
+                        onCheckedChange={() => handleCompleteTodo(todo.id)}
+                        checked={todo.isCompleted}
+                        disabled={todo.isCompleted}
+                      />
+                      <div className='relative flex-1 flex items-center group'>
+                        <div className={`hover:cursor-pointer ${todo.isCompleted ? 'line-through ' : ''}flex-1`}>
+                          {todo.todo}
+                        </div>
+                        {todo.isCompleted ? null : <div className='cursor-pointer ml-2 hidden group-hover:flex group-hover:place-items-center'>
+                          <Pencil1Icon
+                            className='relative h-5 w-5'
+                            onClick={() => { handleEditPayload(todo.id, todo.todo, todo.priority ?? "", todo.hours ?? "", todo.minutes ?? ""); dispatch(ToggleEditTodo()) }}
+                          />
+                          <TrashIcon
+                            className='ms-2 h-5 w-5'
+                            onClick={() => handleDeleteTodo(todo.id)} />
+                        </div>}
+                        {isEditTodoOpen && editValues?.id === todo.id && <EditTodoCard />}
+                      </div>
+                    </div>
+                  ))
               }
             </CardContent>
             <CardFooter>
