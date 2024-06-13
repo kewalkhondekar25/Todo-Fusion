@@ -8,26 +8,14 @@ import { redirect } from "next/navigation";
 import { SignupFormDemo } from '../../components/SignInForm'
 
 const page = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if (session?.user && status === 'authenticated') {
-      router.push('/dashboard');
-    }
-  }, [session, status, router]);
-
+  // const router = useRouter();
   // const { data: session, status } = useSession();
-  // // useEffect(() => {
-  // //   // Redirect only if session data exists and status is 'authenticated'
-  //   if (session?.user && status === "authenticated") {
-  //     router.push("/");
+
+  // useEffect(() => {
+  //   if (session?.user && status === 'authenticated') {
+  //     router.push('/dashboard');
   //   }
   // }, [session, status, router]);
-  // const session = await getServerSession(NEXT_AUTH);
-  // if(session?.user){
-  //   redirect("/")
-  // }
 
   return (
     <div>
