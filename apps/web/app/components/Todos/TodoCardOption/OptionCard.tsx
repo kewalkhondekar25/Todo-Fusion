@@ -17,13 +17,21 @@ import {
 import { Label } from "../../ui/label2"
 import { RadioGroup, RadioGroupItem } from "../../ui/radio"
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
-import {setAddedTodoStatus, setTodayCardColor, setUpcomingCardColor, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice'
+import {
+  setAddedTodoStatus, 
+  setTodayCardColor, 
+  setUpcomingCardColor, 
+  toggleCardOption
+} from '../../../../lib/store/features/todos/todoSlice'
 import axios from 'axios'
 import { toast } from 'sonner'
-
-
+import { usePathname } from 'next/navigation'
 
 const OptionCard = () => {
+  
+  const pathName = usePathname()
+  console.log(pathName);
+  
   const items = [
     { text: 'Mark All', icon: <CheckCircledIcon /> },
     { text: 'Priority Sort', icon: <ActivityLogIcon /> },
@@ -31,10 +39,17 @@ const OptionCard = () => {
   ];
 
   const dispatch = useAppDispatch();
-  const {todayCardColor, UpcomingCardColor, todos} = useAppSelector(state => state.todo);
+  const {
+    todayCardColor, 
+    UpcomingCardColor, 
+    todos,
+    UpcomingAllCmpltTodo
+  } = useAppSelector(state => state.todo);
 
-  const yetToComplete = todos.filter(item => item.isCompleted === false).map(item => item.id);
-  console.log("ids: ", yetToComplete);
+  const yetToComplete = todos.filter(item => !item.isCompleted ).map(item => item.id);
+  const yetToCmpltUpcomingTodos = UpcomingAllCmpltTodo.filter(item => !item.isCompleted).map(item => item.id);
+  console.log(yetToCmpltUpcomingTodos);
+  
   
   const getDate = (value: string): {
     date: string | undefined,
@@ -57,22 +72,22 @@ const OptionCard = () => {
   };
   const handleOptions = async (menu: string) => {
     try {
-      if(menu === "Mark All"){
-        const response = await axios.post("/api/completealltodos", {yetToComplete})
+      const todoIds = pathName === "/today" ? yetToComplete : yetToCmpltUpcomingTodos;
+      if (menu === "Mark All") {
+        const response = await axios.post("/api/completealltodos", { payload: todoIds });
         const result = response.data;
-        if(result){
-          dispatch(setAddedTodoStatus(`${yetToComplete}`));
+        if (result) {
+          dispatch(setAddedTodoStatus(`${yetToCmpltUpcomingTodos}`));
           dispatch(toggleCardOption());
           toast("Mission accomplished⛳! All todos completed!", {
             description: "You’ve finished all your tasks. Well done!🎉"
-          })
+          });
         }
       }
     } catch (error) {
-      const errMsg = error instanceof Error;
-      console.log(errMsg);
+      console.error('Error updating todos:', error);
     }
-  }
+  };
   
   
   return (
@@ -87,10 +102,10 @@ const OptionCard = () => {
           {items.map((item, index) => (
             <div 
               key={index}
-              className='flex justify-between place-items-center mb-2' 
+              className='flex justify-between place-items-center mb-2 group' 
               onClick={() => handleOptions(item.text)}>
               <div>{item.text}</div>
-              {item.icon}
+              <div className="group-hover:text-yellow-500">{item.icon}</div>
             </div>
           ))}
         </CardContent>

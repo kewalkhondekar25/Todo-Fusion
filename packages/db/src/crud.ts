@@ -117,7 +117,7 @@ export const updateCompleteTodo = async (todoId: string) => {
 };
 
 export const updateAllCompleteTodo = async (todoIds: string[]) => {
-  // console.log(todoIds);
+  console.log(todoIds);
   try {
     const allCompletedTodos = await prisma.todos.updateMany({
       where: {
@@ -129,6 +129,7 @@ export const updateAllCompleteTodo = async (todoIds: string[]) => {
         isCompleted: true
       }
     })
+    console.log("completed: ", allCompletedTodos);
     return allCompletedTodos;
   } catch (error) {
     const errorMsg = error instanceof Error;

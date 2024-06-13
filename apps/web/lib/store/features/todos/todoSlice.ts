@@ -46,7 +46,8 @@ type TodoType = {
   upcomingTodos: AllTodosType[],
   isOptionOpen: boolean,
   todayCardColor: string,
-  UpcomingCardColor: UpcomingCardColorType[]
+  UpcomingCardColor: UpcomingCardColorType[],
+  UpcomingAllCmpltTodo: AllTodosType[]
 };
 
 const initialState: TodoType = {
@@ -60,7 +61,8 @@ const initialState: TodoType = {
   upcomingTodos: [],
   isOptionOpen: false,
   todayCardColor: "C2D5C3",
-  UpcomingCardColor: []
+  UpcomingCardColor: [],
+  UpcomingAllCmpltTodo: []
 };
 
 export const todoSlice = createSlice({
@@ -99,6 +101,9 @@ export const todoSlice = createSlice({
     },
     setUpcomingCardColor: (state, action: PayloadAction<UpcomingCardColorType[]>) => {
       state.UpcomingCardColor= action.payload;
+    },
+    setUpcomingAllCmpltTodo: (state, action: PayloadAction<AllTodosType[]>) => {
+      state.UpcomingAllCmpltTodo = action.payload;
     }
   }
 });
@@ -113,7 +118,8 @@ export const {
   setUpcomingTodos,
   toggleCardOption,
   setTodayCardColor,
-  setUpcomingCardColor
+  setUpcomingCardColor,
+  setUpcomingAllCmpltTodo
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../lib/store/hooks/hooks'
-import { ToggleEditTodo, setAddedTodoStatus, setEditTodo, setEditValues, setUpcomingTodos, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice';
+import { ToggleEditTodo, setAddedTodoStatus, setEditTodo, setEditValues, setUpcomingAllCmpltTodo, setUpcomingTodos, toggleCardOption } from '../../../../lib/store/features/todos/todoSlice';
 import axios from 'axios';
 import {
   Card,
@@ -144,6 +144,7 @@ const UpcomingTodos = () => {
               <div className='cursor-pointer'>
                 <DotsVerticalIcon
                   onClick={() => {
+                    dispatch(setUpcomingAllCmpltTodo(groupedTodos[date]));
                     setSelectedCard(sortedDates[i]); 
                     setHighlightedCardId(prev => {
                       const newHighlightedCardId = [...prev, sortedDates[i]].filter(Boolean) as string[];
