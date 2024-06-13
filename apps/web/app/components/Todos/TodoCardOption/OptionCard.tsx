@@ -97,7 +97,11 @@ const OptionCard = () => {
         })
       }else if(pathName === "/today" && menu === "Priority Sort"){
         console.log("today sort");
-        dispatch(setTodayPrioritySort())
+        dispatch(setTodayPrioritySort());
+        dispatch(toggleCardOption());
+        isTodayPrioritySorted ? toast("Todos sorted 🃏") : toast("Todos sorted", {
+          description: "High Priority🔝"
+        })
       }
     } catch (error) {
       console.error('Error updating todos:', error);
