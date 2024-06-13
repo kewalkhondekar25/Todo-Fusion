@@ -1,34 +1,20 @@
-import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { NEXT_AUTH } from "./lib/auth";
 
-export default async function middleware(request: NextRequest){
-  const token = await getToken({req: request});
-  // const session = await getServerSession(NEXT_AUTH)
-  // const url = request.nextUrl
-  // const cookies = request.cookies;
-  // const token = cookies["next-auth.session-token" as keyof typeof cookies] ;
-  // console.log(token);
-  // console.log(session);
+export default async function middleware(request: NextRequest) {
   
-  
-
-  if( token && (request.nextUrl.pathname.startsWith("/signin2"))){
-    return NextResponse.redirect(new URL("/", request.nextUrl))
+  const token = await getToken({ req: request });
+  if(token && (request.nextUrl.pathname.startsWith("/signin") || request.nextUrl.pathname.startsWith("/signup") || request.nextUrl.pathname === "/")){
+    return NextResponse.redirect(new URL("/today", request.nextUrl));
   }
-  // if(request.nextUrl.pathname.startsWith("/dashboard")){
-  //   return NextResponse.redirect(new URL("/", request.url))
-  // }
 
-  // return NextResponse.next();
+  if(!token && (request.nextUrl.pathname.startsWith("/today") || request.nextUrl.pathname.startsWith("/upcoming") || request.nextUrl.pathname.startsWith("/dashboard"))){
+    return NextResponse.redirect(new URL("/signin", request.nextUrl));
+  }
+  
+  return NextResponse.next();
 }
 
-// export const config = {
-//   matcher: ["/signin"]
-// }
-// export const config = {
-//   api: {
-//     bodyParser: false, // Disable body parsing since we don't need it
-//   },
-// };
+export const config = {
+  matcher: ["/", "/signin", "/signup", "/dashboard", "/today", "/upcoming"],
+};

@@ -42,7 +42,7 @@ export function SignupFormDemo() {
         toast("Success! 🕵️‍♂️", {
           description: "You've signed up successfully"
         })
-        router.push("/signin")
+        // router.push("/signin")
       } catch (error: any) {
         if(error.response && error.response.status === 409){
           formik.setErrors({ email: "Whoops! Looks like the Email already exists." });
@@ -55,12 +55,8 @@ export function SignupFormDemo() {
     }
   })
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   console.log("Form submitted");
-  // };
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-[#1F1F1F]">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
       Sign Up to Fusion
       </h2>
