@@ -123,6 +123,15 @@ const UpcomingTodos = () => {
     }
   };
 
+  if(!sortedDates.length){
+    return(
+      <div className=" relative flex justify-center place-items-center h-screen">
+        {/* <div className='absolute top-20'>no upcoming todos</div> */}
+        <div className='absolute top-1/4 right-2/3 '><AddTodo /></div>
+      </div>
+    )
+  }
+
   return (
     <div className='relative grid grid-cols-4 gap-3 p-3'>
       {
