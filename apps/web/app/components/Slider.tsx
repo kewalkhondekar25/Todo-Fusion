@@ -10,7 +10,9 @@ import Link from 'next/link';
 
 
 const Slider = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession();  
+  const avaTar = session?.user?.image;
+  
   const subCategory: string[] = ["today", "upcoming"]
   const iconMap: any = {
     today: Pencil2Icon,
@@ -23,7 +25,7 @@ const Slider = () => {
         <div>
           <div className='flex justify-center place-items-center gap-2'>
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={`${session ? `${avaTar}` : "https://github.com/shadcn.png"}`} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p>
