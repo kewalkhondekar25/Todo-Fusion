@@ -41,8 +41,9 @@ type AllTodosType = {
 
 const UpcomingTodos = () => {
 
-  const colors = ["#F0F0F0", "#EEA68F", "#D0DAFA", "#FFD0DF", "#ECDFAB", "#C2D5C3"];
-
+  const colors = ["#BDD6C3", "#C09DEC", "#CEDBFF", "#FFD0DF", "#ECDFAB", "#C2D5C3"];
+  // const colors = ["#C09DEC", "#80DD97", "#7DADEF", "#F1D34C", "#EEA057", "#C2D5C3"];
+  
   const [openOptionsId, setOpenOptionsId] = useState<any>(null);
   const [highlightedCardId, setHighlightedCardId] = useState<string[]>([]);
   const [selectedCard, setSelectedCard] = useState<string>();

@@ -27,12 +27,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <StoreProvider>
-            <Header/>
+            {/* <Header/> */}
             {children}
             <Toaster/>
           </StoreProvider>
         </Providers>
-      </body>
+        </body>
     </html>
   );
 }

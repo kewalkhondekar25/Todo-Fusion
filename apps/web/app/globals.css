@@ -129,3 +129,12 @@
 .time-picker-input:hover {
   border-color: #4a4a4a;
 }
+
+
+/*home*/
+@media (max-width: 320px) {
+  .text-below-320 {
+    color: aqua;
+    font-size: 1.5rem; /* Tailwind's text-2xl size */
+  }
+}

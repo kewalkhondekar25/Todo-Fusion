@@ -6,6 +6,10 @@ import { Button } from "@repo/ui/button";
 import { createUser, createTodos } from "@repo/db";
 import { MESSAGE } from "@repo/validation-schema";
 import Authenticate from "./components/Authenticate";
+import { GridBackgroundDemo } from "./components/BackgroundGrid";
+import { SparklesPreview } from "./components/Sparkel";
+import HeaderTop from "./components/Home/HeaderTop";
+import HeroSection from "./components/Home/HeroSection";
 
 export default function Page() {
 
@@ -13,10 +17,13 @@ export default function Page() {
   return (
     <main>
       {/* className="bg-slate-800 text-white h-screen" */}
-      <Button appName="web">
+      {/* <Button appName="web">
         Click me!
       </Button>      
-      <Authenticate/>
+      <Authenticate/> */}
+      {/* <GridBackgroundDemo/> */}
+      <HeaderTop/>
+      <HeroSection/>
     </main>
   );
 }

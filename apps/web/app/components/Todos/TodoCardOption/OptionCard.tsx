@@ -133,10 +133,15 @@ const OptionCard = () => {
             className='flex'
             defaultValue={todayCardColor}
             onValueChange={handleValueChange}>
-            <RadioGroupItem value="C2D5C3" id="green" className='bg-[#C2D5C3] text-black'  />
+            <RadioGroupItem value="C2D5C3" id="green" className='bg-[#6E29AE] text-black'  />
+            <RadioGroupItem value="D0DAFA" id="blue" className='bg-[#356E42] text-black' />
+            <RadioGroupItem value="E2AA96" id="pink" className='bg-[#2A48B2] text-black' />
+            <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#885A1F] text-black' />
+            <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#984220] text-black' />
+            {/* <RadioGroupItem value="C2D5C3" id="green" className='bg-[#C2D5C3] text-black'  />
             <RadioGroupItem value="D0DAFA" id="blue" className='bg-[#D0DAFA] text-black' />
             <RadioGroupItem value="E2AA96" id="pink" className='bg-[#E2AA96] text-black' />
-            <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#ECDFAB] text-black' />
+            <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#ECDFAB] text-black' /> */}
           </RadioGroup>
           <MagicWandIcon />
         </CardFooter>
