@@ -2,7 +2,7 @@
   "name": "todo-fusion",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=apps/web",
+    "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
