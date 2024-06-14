@@ -8,14 +8,6 @@ import { redirect } from "next/navigation";
 import { SignupFormDemo } from '../../components/SignInForm'
 
 const page = () => {
-  // const router = useRouter();
-  // const { data: session, status } = useSession();
-
-  // useEffect(() => {
-  //   if (session?.user && status === 'authenticated') {
-  //     router.push('/dashboard');
-  //   }
-  // }, [session, status, router]);
 
   return (
     <div>

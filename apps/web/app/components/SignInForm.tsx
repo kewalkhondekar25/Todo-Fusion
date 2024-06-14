@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { signIn, useSession } from "next-auth/react"
 import { NextURL } from "next/dist/server/web/next-url";
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from "sonner";
 
 
@@ -26,6 +26,7 @@ export function SignupFormDemo() {
   
   const [signInError, setSignInError] = useState<string | null>(null);
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -49,6 +50,7 @@ export function SignupFormDemo() {
         } else {
           setPasswordIncorrect(false);
           setSignInError(null);
+          router.push("/today");
           toast(`Welcome to Fusion! 📌`, {
             description: "Stay organized, stay productive. Let's conquer those tasks together!"
           })

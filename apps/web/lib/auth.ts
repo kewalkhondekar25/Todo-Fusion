@@ -55,7 +55,7 @@ export const NEXT_AUTH: NextAuthOptions = {
           }
 
           const user = await getSingleUser(credentials.email) as CreatedUserType;
-
+          
           if (!user) {
             return null;
           }

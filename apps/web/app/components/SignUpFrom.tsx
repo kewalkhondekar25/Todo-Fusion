@@ -42,7 +42,7 @@ export function SignupFormDemo() {
         toast("Success! 🕵️‍♂️", {
           description: "You've signed up successfully"
         })
-        // router.push("/signin")
+        router.push("/signin")
       } catch (error: any) {
         if(error.response && error.response.status === 409){
           formik.setErrors({ email: "Whoops! Looks like the Email already exists." });
