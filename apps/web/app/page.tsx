@@ -10,6 +10,7 @@ import { GridBackgroundDemo } from "./components/BackgroundGrid";
 import { SparklesPreview } from "./components/Sparkel";
 import HeaderTop from "./components/Home/HeaderTop";
 import HeroSection from "./components/Home/HeroSection";
+import HomeCards from "./components/Home/HomeCards";
 
 export default function Page() {
 
@@ -20,10 +21,12 @@ export default function Page() {
       {/* <Button appName="web">
         Click me!
       </Button>      
-      <Authenticate/> */}
+      */}
+      {/* <Authenticate/>  */}
       {/* <GridBackgroundDemo/> */}
       <HeaderTop/>
       <HeroSection/>
+      <HomeCards/>
     </main>
   );
 }

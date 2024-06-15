@@ -4,6 +4,7 @@ import {
   Share2Icon,
   ChatBubbleIcon,
 } from '@radix-ui/react-icons'
+import { FlipWordsDemo } from '../FlipWords'
 
 const HeroSection = () => {
   return (
@@ -30,8 +31,11 @@ const HeroSection = () => {
         <div className='text-3xl font-bold'>
           with your todos
         </div>
-        <div className='text-center text-[#CFCFD3] mt-3 font-medium'>
-          Elevate your productivity effortlessly with fusion, the todo tracking app designed for designer
+        <div className='w-80 text-center text-sm text-[#CFCFD3] mt-3 font-semibold'>
+          <div>
+            Elevate your productivity effortlessly with fusion, the modern todo tracking app designed
+          </div>
+            <FlipWordsDemo/>
         </div>
       </div>
     </section>
