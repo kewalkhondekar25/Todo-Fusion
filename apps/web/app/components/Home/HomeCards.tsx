@@ -25,9 +25,10 @@ interface TodoGroup {
   title: string;
   todo: Todo[];
   date: number;
+  color: string
 }
 
-const HomeCards: React.FC = () => {
+const HomeCards = () => {
   const initialTodos: TodoGroup[] = [
     {
       id: 1,
@@ -38,28 +39,31 @@ const HomeCards: React.FC = () => {
         { name: "buy broccoli", isCheck: false },
         { name: "pay utilities", isCheck: false }
       ],
-      date: 1
+      date: 1,
+      color: "F0F0F0"
     },
     {
       id: 2,
       title: "today",
       todo: [
-        { name: "optimise pp algorithm", isCheck: false },
+        { name: "optimise pp algorithm", isCheck: true },
         { name: "tweeting time", isCheck: false },
         { name: "naturals ice cream", isCheck: false },
         { name: "cardio day", isCheck: false }
       ],
-      date: 0
+      date: 0,
+      color: "292929"
     },
     {
       id: 3,
       title: "yesterday",
       todo: [
-        { name: "fix bank stuff", isCheck: false },
-        { name: "practice piano", isCheck: false },
-        { name: "pack for hiking", isCheck: false }
+        { name: "fix bank stuff", isCheck: true },
+        { name: "practice piano", isCheck: true },
+        { name: "pack for hiking", isCheck: true }
       ],
-      date: -1
+      date: -1,
+      color: "D0DAFA"
     }
   ];
 
@@ -102,13 +106,21 @@ const HomeCards: React.FC = () => {
       {todos.map(group => (
         <Card
           key={group.id}
-          className='bg-[#292929] border-[#525252] mb-2 mx-2'>
+          style={{
+            backgroundColor: `#${group.color}`,
+            color: `${group.color === "292929" ? "white" : "black"}` 
+          }}
+          className='text-black border-[#525252] mb-2 mx-3'>
           <CardHeader>
             <div>
               <CardTitle>
-                <div className='capitalize '>{group.title}</div>
+                <div className='capitalize'>{group.title}</div>
               </CardTitle>
-              <CardDescription className='flex place-items-center gap-2 mt-2'>
+              <CardDescription 
+              style={{
+                color: `${group.color === "292929" ? "white" : "black"}` 
+              }}
+              className='flex place-items-center gap-2 mt-2 text-black'>
                 <ListBulletIcon />
                 {group.todo.length} todos
                 <CalendarIcon />
@@ -121,6 +133,7 @@ const HomeCards: React.FC = () => {
               <div key={todo.name} className='flex place-items-center gap-2 mb-1'>
                 <Checkbox
                   className='border-white'
+                  style={{borderColor: `${group.color === "292929" ? "white" : "black"}` }}
                   checked={todo.isCheck}
                   onCheckedChange={() => handleCheck(todo.name, group.id)}
                 />
