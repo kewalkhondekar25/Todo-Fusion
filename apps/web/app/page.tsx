@@ -11,6 +11,7 @@ import { SparklesPreview } from "./components/Sparkel";
 import HeaderTop from "./components/Home/HeaderTop";
 import HeroSection from "./components/Home/HeroSection";
 import HomeCards from "./components/Home/HomeCards";
+import FeaturesCard from "./components/Home/FeaturesCard";
 
 export default function Page() {
 
@@ -27,6 +28,7 @@ export default function Page() {
       <HeaderTop/>
       <HeroSection/>
       <HomeCards/>
+      <FeaturesCard/>
     </main>
   );
 }

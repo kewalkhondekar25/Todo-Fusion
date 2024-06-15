@@ -12,7 +12,8 @@ import {
   CheckCircledIcon,
   ActivityLogIcon,
   Link2Icon,
-  MagicWandIcon
+  MagicWandIcon,
+  CursorArrowIcon
 } from '@radix-ui/react-icons'
 import { Label } from "../../ui/label2"
 import { RadioGroup, RadioGroupItem } from "../../ui/radio"
@@ -137,7 +138,7 @@ const OptionCard = () => {
             <RadioGroupItem value="D0DAFA" id="blue" className='bg-[#356E42] text-black' />
             <RadioGroupItem value="E2AA96" id="pink" className='bg-[#2A48B2] text-black' />
             <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#885A1F] text-black' />
-            <RadioGroupItem value="ECDFAB" id="yellow" className='bg-[#984220] text-black' />
+            {/* <RadioGroupItem value="ECDFAB" checked={false} id="yellow" className='bg-[#984220] text-black' /> */}
             {/* <RadioGroupItem value="C2D5C3" id="green" className='bg-[#C2D5C3] text-black'  />
             <RadioGroupItem value="D0DAFA" id="blue" className='bg-[#D0DAFA] text-black' />
             <RadioGroupItem value="E2AA96" id="pink" className='bg-[#E2AA96] text-black' />
