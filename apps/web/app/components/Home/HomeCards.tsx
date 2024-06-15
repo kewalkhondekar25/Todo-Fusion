@@ -110,7 +110,7 @@ const HomeCards = () => {
             backgroundColor: `#${group.color}`,
             color: `${group.color === "292929" ? "white" : "black"}` 
           }}
-          className='text-black border-[#525252] mb-2 mx-3'>
+          className='text-black border-[#525252] mb-3 mx-3'>
           <CardHeader>
             <div>
               <CardTitle>
