@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "../ui/card"
 import ColorFeature from "../../../public/colorfeatures.png"
+import EditFeature from "../../../public/feature2.png"
 import Image from 'next/image'
 
 const FeaturesCard = () => {
@@ -42,6 +43,21 @@ const FeaturesCard = () => {
             </CardContent>
             <CardFooter className='text-white text-sm font-normal'>
               <p>Toggle between a rainbow and minimal mode in a single click. Actually 2 clicks, but you get the point</p>
+            </CardFooter>
+          </Card>
+        </div>
+        <div>
+        <Card
+            className='bg-[#292929] text-black border-[#525252] mt-3 mx-3'>
+            <CardHeader >
+              <Image
+              src={EditFeature} height={200} alt='color'/>
+            </CardHeader>
+            <CardContent className='flex place-items-center font-semibold text-lg'>
+              <p className='mr-1 text-white'>Productivity at its peak</p>
+            </CardContent>
+            <CardFooter className='text-white text-sm font-normal'>
+              <p>Effortlessly create and edit your to-dos, prioritize tasks for maximum efficiency, and set reminders to ensure nothing slips through the cracks.</p>
             </CardFooter>
           </Card>
         </div>

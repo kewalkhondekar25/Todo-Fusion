@@ -36,8 +36,8 @@ const HomeCards = () => {
       todo: [
         { name: "prepare bento meal", isCheck: false },
         { name: "tweeting time", isCheck: false },
-        { name: "buy broccoli", isCheck: false },
-        { name: "pay utilities", isCheck: false }
+        { name: "buy avocado🥑", isCheck: false },
+        { name: "pay💰utilities", isCheck: false }
       ],
       date: 1,
       color: "F0F0F0"
@@ -46,9 +46,9 @@ const HomeCards = () => {
       id: 2,
       title: "today",
       todo: [
-        { name: "optimise pp algorithm", isCheck: true },
+        { name: "optimise pp algorithm💻", isCheck: true },
         { name: "tweeting time", isCheck: false },
-        { name: "naturals ice cream", isCheck: false },
+        { name: "naturals ice🍦cream", isCheck: false },
         { name: "cardio day", isCheck: false }
       ],
       date: 0,
@@ -59,8 +59,8 @@ const HomeCards = () => {
       title: "yesterday",
       todo: [
         { name: "fix bank stuff", isCheck: true },
-        { name: "practice piano", isCheck: true },
-        { name: "pack for hiking", isCheck: true }
+        { name: "practice piano🎹", isCheck: true },
+        { name: "pack🎒 for hiking", isCheck: true }
       ],
       date: -1,
       color: "D0DAFA"
