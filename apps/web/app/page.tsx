@@ -12,6 +12,8 @@ import HeaderTop from "./components/Home/HeaderTop";
 import HeroSection from "./components/Home/HeroSection";
 import HomeCards from "./components/Home/HomeCards";
 import FeaturesCard from "./components/Home/FeaturesCard";
+import Subscribe from "./components/Footer/Subscribe";
+import Footer from "./components/Footer/Footer";
 
 export default function Page() {
 
@@ -29,6 +31,8 @@ export default function Page() {
       <HeroSection/>
       <HomeCards/>
       <FeaturesCard/>
+      <Subscribe/>
+      {/* <Footer/> */}
     </main>
   );
 }

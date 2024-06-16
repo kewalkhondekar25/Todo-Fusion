@@ -20,7 +20,7 @@ const FeaturesCard = () => {
   return (
     <section className='flex flex-col justify-center'>
       <div className='flex flex-col mx-3'>
-        <div className='text-2xl font-bold  mt-2'>This is a <span className='text-[#A38CF3]'>different</span> approach to todos</div>
+        <div className='text-2xl font-bold  mt-8'>This is a <span className='text-[#A38CF3]'>different</span> approach to todos</div>
         <div className='text-sm font-medium mt-1'>we&apos;ve reimagined todo tracking by making your todos your personal page, sharable with anyone and completetly customizable.</div>
       </div>
       <div>
