@@ -7,7 +7,7 @@ import { useAppSelector } from '../../lib/store/hooks/hooks'
 const Header = () => {
   const {isToggle} = useAppSelector(state => state.slider);
   return (
-    <section>
+    <section className='h-full'>
     <SliderToggleBtn/>
       {isToggle && <Slider/>}
     </section>
