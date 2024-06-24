@@ -56,9 +56,12 @@ const Slider = () => {
                 })
               }
             </div>
+            <div className='flex flex-col'>
+              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/">Home</Link>
+            </div>
           </nav>
-          <Link href="/dashboard">Dashboard</Link>
-          <Link href="/">Home</Link>
+          
         </div>
         <SliderToggleBtn/>
       </div>
