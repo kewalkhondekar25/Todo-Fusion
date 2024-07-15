@@ -23,7 +23,7 @@ const Slider = () => {
     <section className='fixed z-20 top-0 bg-[#191919] h-screen w-60'>
       <div className='flex justify-between'>
         <div>
-          <div className='flex flex-col justify-start ml-1 mt-2 text-xs text-[#CFCFD3] font-semibold gap-2'>
+          <div className='flex flex-col justify-start ml-1 mt-2 text-sm text-[#CFCFD3] font-semibold gap-2'>
             <Avatar>
               <AvatarImage src={`${session ? `${avaTar}` : "https://github.com/shadcn.png"}`} />
               <AvatarFallback>CN</AvatarFallback>
